@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision Patrimoniale · Mehdi</title>
+<style>
+:root {
+  --bg: #f9f9f8; --surface: #ffffff; --surface2: #f5f4f0;
+  --text: #0b0b0b; --text2: #52514e; --text3: #898781;
+  --border: rgba(11,11,11,0.10); --border2: rgba(11,11,11,0.15);
+  --accent: #2a78d6; --accent-bg: #e6f1fb; --accent-text: #185fa5;
+  --success: #0f6e56; --success-bg: #e1f5ee;
+  --radius: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111110; --surface: #1a1a19; --surface2: #232322;
+    --text: #f0efec; --text2: #c3c2b7; --text3: #898781;
+    --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.15);
+    --accent: #3987e5; --accent-bg: #0c2040; --accent-text: #85b7eb;
+    --success: #1d9e75; --success-bg: #04342c;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;}
+.app{display:flex;flex-direction:column;min-height:100vh;}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:0.5px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:10;}
+.hdr-eyebrow{font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:3px;}
+.hdr-title{font-size:18px;font-weight:500;color:var(--text);}
+.mode-btns{display:flex;gap:6px;}
+.mode-btn{padding:5px 13px;border-radius:var(--radius);cursor:pointer;font-size:12px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-family:inherit;}
+.mode-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent-text);font-weight:500;}
+.body{display:flex;flex:1;}
+.side{width:240px;min-width:240px;border-right:0.5px solid var(--border);padding:14px 13px;background:var(--surface);overflow-y:auto;}
+.main{flex:1;padding:18px;overflow-y:auto;}
+.sec-hdr{font-size:9px;letter-spacing:1.5px;color:var(--text3);font-weight:600;border-bottom:0.5px solid var(--border);padding-bottom:5px;margin-bottom:10px;margin-top:16px;}
+.sec-hdr:first-child{margin-top:0;}
+.slider-row{margin-bottom:12px;}
+.slider-label{display:flex;justify-content:space-between;margin-bottom:3px;font-size:12px;color:var(--text2);}
+.slider-val{font-weight:600;font-size:12px;}
+input[type=range]{width:100%;height:4px;cursor:pointer;}
+.field{margin-bottom:8px;}
+.field label{display:block;font-size:11px;color:var(--text3);margin-bottom:3px;}
+.field input[type=number]{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:5px 9px;font-size:12px;font-family:inherit;outline:none;}
+.field input[type=number]:focus{border-color:var(--accent);}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+.kpi-card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:12px 14px;}
+.kpi-lbl{font-size:11px;color:var(--text3);margin-bottom:4px;}
+.kpi-val{font-size:22px;font-weight:500;margin-bottom:2px;line-height:1.1;}
+.kpi-sub{font-size:11px;color:var(--text2);}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.tab-btn{padding:6px 14px;border-radius:var(--radius);cursor:pointer;font-size:12px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-family:inherit;}
+.tab-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent-text);font-weight:500;}
+.chart-box{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:14px 6px 8px;margin-bottom:14px;}
+.legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 10px 8px;font-size:11px;color:var(--text2);}
+.leg-item{display:flex;align-items:center;gap:5px;}
+.leg-sq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.table-box{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;}
+.table-hdr{padding:10px 16px;border-bottom:0.5px solid var(--border);font-size:9px;letter-spacing:2px;color:var(--text3);font-weight:600;}
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;white-space:nowrap;}
+th{padding:8px 12px;text-align:right;color:var(--text3);font-weight:400;font-size:10px;border-bottom:0.5px solid var(--border);}
+th:first-child{text-align:left;}
+td{padding:8px 12px;text-align:right;border-top:0.5px solid var(--border);color:var(--text);}
+td:first-child{text-align:left;}
+tr.hl td{background:var(--accent-bg);}
+tr.hl td:first-child{color:var(--accent-text);font-weight:500;}
+@media(max-width:700px){
+  .body{flex-direction:column;}
+  .side{width:100%;border-right:none;border-bottom:0.5px solid var(--border);}
+  .kpi-grid{grid-template-columns:1fr;}
+  .hdr{padding:10px 14px;}
+  .main{padding:12px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="hdr">
+  <div>
+    <div class="hdr-eyebrow">VISION PATRIMONIALE</div>
+    <div class="hdr-title">Mehdi · 2026–2050</div>
+  </div>
+  <div class="mode-btns">
+    <button class="mode-btn active" id="btn-nom" onclick="setMode('nom')">Nominal</button>
+    <button class="mode-btn" id="btn-real" onclick="setMode('real')">Réel (€ 2026)</button>
+  </div>
+</div>
+
+<div class="body">
+<div class="side">
+  <div class="sec-hdr">TAUX</div>
+  <div class="slider-row">
+    <div class="slider-label"><span>Wealins</span><span class="slider-val" id="lbl-wRate" style="color:#eda100"></span></div>
+    <input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updateSlider('wRate',this.value)" style="accent-color:#eda100">
+  </div>
+  <div class="slider-row">
+    <div class="slider-label"><span>EIP Branche 23</span><span class="slider-val" id="lbl-eRate" style="color:#1baf7a"></span></div>
+    <input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updateSlider('eRate',this.value)" style="accent-color:#1baf7a">
+  </div>
+  <div class="slider-row">
+    <div class="slider-label"><span>Inflation</span><span class="slider-val" id="lbl-infl" style="color:var(--text3)"></span></div>
+    <input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updateSlider('infl',this.value)">
+  </div>
+  <div class="slider-row">
+    <div class="slider-label"><span>Appréciation immo</span><span class="slider-val" id="lbl-iRate" style="color:#2a78d6"></span></div>
+    <input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updateSlider('iRate',this.value)" style="accent-color:#2a78d6">
+  </div>
+
+  <div class="sec-hdr">ACTIFS FINANCIERS</div>
+  <div class="field"><label>Wealins actuel (€)</label><input type="number" id="f-wBase" oninput="updateField('wBase',this.value)"></div>
+  <div class="field"><label>Versement août 2027 (€)</label><input type="number" id="f-v2027" oninput="updateField('v2027',this.value)"></div>
+  <div class="field"><label>EIP actuel (€)</label><input type="number" id="f-eBase" oninput="updateField('eBase',this.value)"></div>
+
+  <div class="sec-hdr">IMMOBILIER</div>
+  <div class="field"><label>Valeur biens actuels (€)</label><input type="number" id="f-iVal" oninput="updateField('iVal',this.value)"></div>
+  <div class="field"><label>Passif hypothécaire (€)</label><input type="number" id="f-iPas" oninput="updateField('iPas',this.value)"></div>
+  <div class="field"><label>Loyers actuels (€/mois)</label><input type="number" id="f-loyers" oninput="updateField('loyers',this.value)"></div>
+  <div class="field"><label>Fin hypothèques (année)</label><input type="number" id="f-hypoEnd" oninput="updateField('hypoEnd',this.value)"></div>
+
+  <div class="sec-hdr">HÉRITAGE</div>
+  <div class="field"><label>Année héritage</label><input type="number" id="f-herYear" oninput="updateField('herYear',this.value)"></div>
+  <div class="field"><label>Immo parentale nette (€)</label><input type="number" id="f-herImmo" oninput="updateField('herImmo',this.value)"></div>
+  <div class="field"><label>Autres actifs nets (€)</label><input type="number" id="f-herOther" oninput="updateField('herOther',this.value)"></div>
+  <div class="field"><label>Loyers parentaux (€/mois)</label><input type="number" id="f-herLoyers" oninput="updateField('herLoyers',this.value)"></div>
+</div>
+
+<div class="main">
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-lbl">2030 — 52 ans</div><div class="kpi-val" id="kpi-2030" style="color:var(--text2)">—</div><div class="kpi-sub" id="kpi-2030-l">—</div></div>
+    <div class="kpi-card" style="border-color:var(--success)"><div class="kpi-lbl">🎯 Retraite — 56 ans</div><div class="kpi-val" id="kpi-2034" style="color:var(--success)">—</div><div class="kpi-sub" id="kpi-2034-l">—</div></div>
+    <div class="kpi-card" style="border-color:var(--accent)"><div class="kpi-lbl">🏁 Pension — 67 ans</div><div class="kpi-val" id="kpi-2043" style="color:var(--accent)">—</div><div class="kpi-sub" id="kpi-2043-l">—</div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-total" onclick="setTab('total')">Patrimoine total</button>
+    <button class="tab-btn" id="tab-breakdown" onclick="setTab('breakdown')">Par actif</button>
+    <button class="tab-btn" id="tab-income" onclick="setTab('income')">Revenus locatifs</button>
+  </div>
+
+  <div class="chart-box">
+    <div class="legend" id="chart-legend"></div>
+    <div style="position:relative;width:100%;height:280px;">
+      <canvas id="mainChart"></canvas>
+    </div>
+  </div>
+
+  <div class="table-box">
+    <div class="table-hdr">JALONS CLÉS</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Année</th><th>Âge</th>
+          <th style="color:#eda100">Wealins</th>
+          <th style="color:#1baf7a">EIP</th>
+          <th style="color:#2a78d6">Immo net</th>
+          <th style="color:#4a3aa7">Héritage+</th>
+          <th>Total</th><th>€/mois</th>
+        </tr></thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const BIRTH=1978,Y0=2026,Y1=2050;
+const MILESTONES=[2026,2027,2028,2030,2034,2038,2043,2050];
+const HL=[2034,2043];
+const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7'};
+
+let p={wBase:93398,wRate:7,v2027:20000,eBase:98000,eRate:5,infl:2,iVal:580000,iPas:200000,loyers:1900,hypoEnd:2034,herYear:2034,herImmo:275000,herOther:235000,herLoyers:1800};
+let mode='nom',tab='total',chartInst=null,rows=[];
+
+function fmt(v,compact=true){
+  if(v===null||v===undefined||isNaN(v))return'—';
+  const a=Math.abs(v);
+  if(compact&&a>=1e6)return`${+(v/1e6).toFixed(2)}M €`;
+  if(compact&&a>=1000)return`${Math.round(v/1000)}k €`;
+  return v.toLocaleString('fr-BE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+}
+
+function calc(){
+  rows=[];
+  let w=p.wBase,e=p.eBase,io=p.iVal,ip=0;
+  for(let y=Y0;y<=Y1;y++){
+    const n=y-Y0,age=y-BIRTH;
+    const inf=Math.pow(1+p.infl/100,n),rf=1/inf;
+    const pas=y<p.hypoEnd?p.iPas*Math.max(0,(p.hypoEnd-y)/(p.hypoEnd-Y0)):0;
+    const herO=y>=p.herYear?p.herOther:0;
+    const imN=io-pas,tot=w+e+imN+ip+herO;
+    const lB=p.loyers*inf;
+    const lP=y>=p.herYear?p.herLoyers*Math.pow(1+p.infl/100,Math.max(0,y-p.herYear)):0;
+    const lT=lB+lP;
+    rows.push({year:y,age,w:Math.round(w),e:Math.round(e),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),wR:Math.round(w*rf),eR:Math.round(e*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),lm:Math.round(lT),la:Math.round(lT*12),lmR:Math.round(lT*rf),laR:Math.round(lT*12*rf)});
+    w*=(1+p.wRate/100);if(y===2027)w+=p.v2027;
+    e*=(1+p.eRate/100);
+    io*=(1+p.iRate/100);
+    if(y===p.herYear)ip=p.herImmo;else if(y>p.herYear)ip*=(1+p.iRate/100);
+  }
+}
+
+function vk(d,k){return mode==='real'?d[k+'R']:d[k];}
+function find(y){return rows.find(r=>r.year===y);}
+
+const isDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
+
+function updateKPIs(){
+  [[2030,'kpi-2030'],[2034,'kpi-2034'],[2043,'kpi-2043']].forEach(([y,id])=>{
+    const d=find(y);
+    document.getElementById(id).textContent=fmt(vk(d,'tot'));
+    document.getElementById(id+'-l').textContent='Loyers : '+fmt(vk(d,'lm'))+'/mois';
+  });
+}
+
+function updateTable(){
+  const tbody=document.getElementById('tbl-body');
+  tbody.innerHTML='';
+  MILESTONES.forEach(y=>{
+    const d=find(y);if(!d)return;
+    const hl=HL.includes(y);
+    const yr=y+(y===2034?' 🎯':y===2043?' 🏁':'');
+    const tr=document.createElement('tr');
+    if(hl)tr.className='hl';
+    tr.innerHTML=`<td style="font-weight:${hl?600:400}">${yr}</td><td style="color:var(--text3)">${d.age}</td><td style="color:#eda100;font-weight:500">${fmt(vk(d,'w'))}</td><td style="color:#1baf7a;font-weight:500">${fmt(vk(d,'e'))}</td><td style="color:#2a78d6;font-weight:500">${fmt(vk(d,'io'))}</td><td style="color:#4a3aa7;font-weight:500">${fmt(vk(d,'ip'))}</td><td style="font-weight:600">${fmt(vk(d,'tot'))}</td><td style="color:var(--text2)">${fmt(vk(d,'lm'))}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderChart(){
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  const dark=isDark();
+  const grid=dark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+  const tick=dark?'#898781':'#898781';
+  const ttBg=dark?'#2c2c2a':'#ffffff';
+  const ttTxt=dark?'#f0efec':'#0b0b0b';
+  const ttBorder=dark?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.12)';
+  const yrs=rows.map(r=>String(r.year));
+  const r2034=rows.findIndex(r=>r.year===2034);
+  const r2043=rows.findIndex(r=>r.year===2043);
+
+  const refPlugin={id:'refs',afterDraw(chart){
+    const ctx=chart.ctx,xs=chart.scales.x,ys=chart.scales.y;
+    if(!xs||!ys)return;
+    [[r2034,C.e,'Retraite 2034'],[r2043,C.i,'Pension 2043']].forEach(([idx,col,lbl])=>{
+      if(idx<0)return;
+      const x=xs.getPixelForIndex(idx);
+      ctx.save();ctx.strokeStyle=col+'88';ctx.setLineDash([5,4]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x,ys.top);ctx.lineTo(x,ys.bottom);ctx.stroke();
+      ctx.fillStyle=col;ctx.font='9px system-ui';ctx.textAlign='center';
+      ctx.fillText(lbl,x,ys.top+10);
+      ctx.restore();
+    });
+  }};
+
+  const baseOpts={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:ttBg,titleColor:ttTxt,bodyColor:ttTxt,borderColor:ttBorder,borderWidth:1,padding:10,callbacks:{title:i=>`${i[0].label} · ${find(parseInt(i[0].label))?.age} ans`,label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}`}}},scales:{x:{grid:{color:grid},ticks:{color:tick,maxTicksLimit:13,font:{size:10}}},y:{grid:{color:grid},ticks:{color:tick,font:{size:10},callback:v=>fmt(v)}}}};
+
+  let cfg;
+  if(tab==='total'){
+    document.getElementById('chart-legend').innerHTML=`<div class="leg-item"><div class="leg-sq" style="background:#2a78d6"></div>Total patrimoine</div>`;
+    cfg={type:'line',data:{labels:yrs,datasets:[{label:'Total patrimoine',data:rows.map(r=>vk(r,'tot')),borderColor:'#2a78d6',backgroundColor:'#2a78d625',borderWidth:2,pointRadius:0,fill:true,tension:0.35}]},options:baseOpts,plugins:[refPlugin]};
+  } else if(tab==='breakdown'){
+    document.getElementById('chart-legend').innerHTML=`<div class="leg-item"><div class="leg-sq" style="background:#4a3aa7"></div>Héritage & immo parentaux</div><div class="leg-item"><div class="leg-sq" style="background:#2a78d6"></div>Immobilier propre (net)</div><div class="leg-item"><div class="leg-sq" style="background:#1baf7a"></div>EIP Branche 23</div><div class="leg-item"><div class="leg-sq" style="background:#eda100"></div>Wealins</div>`;
+    cfg={type:'line',data:{labels:yrs,datasets:[
+      {label:'Héritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+    ]},options:baseOpts,plugins:[refPlugin]};
+  } else {
+    const evR=rows.filter((_,i)=>i%2===0);
+    document.getElementById('chart-legend').innerHTML=`<div class="leg-item"><div class="leg-sq" style="background:#eda100"></div>Loyers annuels bruts</div>`;
+    cfg={type:'bar',data:{labels:evR.map(r=>String(r.year)),datasets:[{label:'Loyers annuels bruts',data:evR.map(r=>vk(r,'la')),backgroundColor:C.w+'cc',borderRadius:3,borderSkipped:false}]},options:{...baseOpts,plugins:{...baseOpts.plugins,tooltip:{...baseOpts.plugins.tooltip,callbacks:{title:i=>{const d=find(parseInt(i[0].label));return`${i[0].label} · ${d?.age} ans — ${fmt(vk(d,'lm'))}/mois`;},label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}`}}}}};
+  }
+  chartInst=new Chart(document.getElementById('mainChart'),cfg);
+}
+
+function refresh(){calc();updateKPIs();updateTable();renderChart();}
+
+function setMode(m){
+  mode=m;
+  ['nom','real'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));
+  refresh();
+}
+
+function setTab(t){
+  tab=t;
+  ['total','breakdown','income'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
+  renderChart();updateKPIs();updateTable();
+}
+
+function updateSlider(k,v){
+  p[k]=parseFloat(v);
+  document.getElementById('lbl-'+k).textContent=parseFloat(v).toFixed(1).replace('.0','')+'%';
+  refresh();
+}
+
+function updateField(k,v){p[k]=parseFloat(v)||0;refresh();}
+
+function initControls(){
+  const sliders=['wRate','eRate','infl','iRate'];
+  sliders.forEach(k=>{
+    document.getElementById('sl-'+k).value=p[k];
+    document.getElementById('lbl-'+k).textContent=p[k]+'%';
+  });
+  ['wBase','v2027','eBase','iVal','iPas','loyers','hypoEnd','herYear','herImmo','herOther','herLoyers'].forEach(k=>{
+    const el=document.getElementById('f-'+k);
+    if(el)el.value=p[k];
+  });
+}
+
+initControls();refresh();
+</script>
+</body>
+</html>
