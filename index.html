@@ -463,7 +463,8 @@ function renderChart(){
       ...baseOpts,
       scales:{
         x:{...baseOpts.scales.x,stacked:true},
-        y:{...baseOpts.scales.y,stacked:true}
+        y:{...baseOpts.scales.y,stacked:true,
+       ticks:{...baseOpts.scales.y.ticks,callback:v=>fmt(v,false)}},
       },
       plugins:{
         ...baseOpts.plugins,
