@@ -62,6 +62,7 @@ input[type=range]{width:100%;cursor:pointer;}
 .tbtn{padding:5px 13px;border-radius:var(--r);cursor:pointer;font-size:12px;border:0.5px solid var(--bd2);background:transparent;color:var(--tx2);font-family:inherit;}
 .tbtn.active{border-color:var(--acc);background:var(--acc-bg);color:var(--acc-tx);font-weight:500;}
 .chart-box{background:var(--sf);border:0.5px solid var(--bd);border-radius:12px;padding:12px 4px 6px;margin-bottom:12px;}
+.chart-container{position:relative;width:100%;height:300px;min-height:250px;}
 .legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 10px 8px;font-size:11px;color:var(--tx2);}
 .li{display:flex;align-items:center;gap:5px;}
 .lsq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
@@ -75,7 +76,13 @@ td{padding:7px 11px;text-align:right;border-top:0.5px solid var(--bd);}
 td:first-child{text-align:left;}
 tr.hl td{background:var(--acc-bg);}
 tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
-@media(max-width:700px){.body{flex-direction:column;}.side{width:100%;max-height:none;position:relative;top:0;border-right:none;border-bottom:0.5px solid var(--bd);}.kpi-grid{grid-template-columns:1fr;}.main{padding:12px;}}
+@media(max-width:700px){
+  .body{flex-direction:column;}
+  .side{width:100%;max-height:none;position:relative;top:0;border-right:none;border-bottom:0.5px solid var(--bd);}
+  .kpi-grid{grid-template-columns:1fr;}
+  .main{padding:12px;}
+  .chart-container{height:250px;}
+}
 </style>
 </head>
 <body>
@@ -141,10 +148,10 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   </div>
   <div class="chart-box">
     <div class="legend" id="chart-legend"></div>
-    <div style="position:relative;width:100%;height:275px;"><canvas id="mainChart"></canvas></div>
+    <div class="chart-container"><canvas id="mainChart"></canvas></div>
   </div>
   <div class="tbox">
-    <div class="tbox-h">JALONS CL&Eacute;S</div>
+    <div class="tbox-h">PATRIMOINE ANNUEL (2026&ndash;2050)</div>
     <div class="tw"><table>
       <thead><tr>
         <th>Ann&eacute;e</th><th>&Acirc;ge</th>
@@ -159,10 +166,13 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
 </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
 const BIRTH=1978, Y0=2026, Y1=2050;
-const MILESTONES=[2026,2027,2028,2030,2033,2034,2035,2038,2043,2045,2050];
+
+// Génération dynamique de TOUTES les années de 2026 à 2050
+const MILESTONES = Array.from({length: Y1 - Y0 + 1}, (_, i) => Y0 + i);
+
 const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
 const MFR=['janv.',`févr.`,'mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.',`déc.`];
 
@@ -372,20 +382,19 @@ function updateTable(){
     const isLoanEnd = loanEndYears.includes(y);
     const isHerYear = (y === p.herYear);
 
-    // Icônes personnalisées selon l'événement
     let mk = '';
     if (isPensionYear) {
-      mk += ' &#127937;'; // Drapeau pour la pension / retraite
+      mk += ' &#127937;';
     }
     if (isLoanEnd) {
-      mk += ' &#128477;'; // Clé pour la fin d'emprunt
+      mk += ' &#128477;';
     }
     if (isHerYear) {
-      mk += ' &#128091;'; // Sac d'argent / Héritage
+      mk += ' &#128091;';
     }
 
     const tr=document.createElement('tr'); if(isPensionYear) tr.className='hl';
-    tr.innerHTML=`<td style="font-weight:${isPensionYear?600:400}">${y}${mk}</td>`
+    tr.innerHTML=`<td style="font-weight:${isPensionYear||isLoanEnd||isHerYear?600:400}">${y}${mk}</td>`
       +`<td style="color:var(--tx3)">${d.age}</td>`
       +`<td style="color:#eda100">${fmt(vk(d,'w'),false)}</td>`
       +`<td style="color:#1baf7a">${fmt(vk(d,'e'),false)}</td>`
@@ -397,10 +406,11 @@ function updateTable(){
   });
 }
 
-// ── Graphiques ─────────────────────────────────────────────────────────────
+// ── Graphiques (avec gestion de repli) ──────────────────────────────────────
 function renderChart(){
   if(typeof Chart==='undefined'){
-    document.getElementById('chart-legend').textContent='Chargement de Chart.js…';
+    document.getElementById('chart-legend').textContent='Chargement du graphique en cours…';
+    setTimeout(renderChart, 300);
     return;
   }
   try{ if(chartInst){chartInst.destroy();chartInst=null;} }catch(e){}
