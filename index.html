@@ -156,7 +156,6 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
 <script>
 const BIRTH=1978, Y0=2026, Y1=2050;
 const MILESTONES=[2026,2027,2028,2030,2033,2034,2035,2038,2043,2045,2050];
-const HL=[2045];
 const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
 const MFR=['janv.',`févr.`,'mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.',`déc.`];
 
@@ -192,6 +191,16 @@ function lmont(def, y){
   return def.M*Math.max(0,Math.min(12,months))/12;
 }
 
+// Calcule dynamiquement les années de fin de tous les emprunts enregistrés
+function getLoanEndYears(){
+  const years = new Set();
+  Object.values(LD).forEach(def => {
+    const endYear = def.start[0] + Math.floor((def.start[1] + def.n - 1) / 12);
+    years.add(endYear);
+  });
+  return Array.from(years);
+}
+
 // ── Données ──────────────────────────────────────────────────────────────
 let propOwn=[
   {name:'Strombeek-Bever',              loyer:1000, valeur:220000, loans:['strombeek'],         share:1},
@@ -208,10 +217,10 @@ let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
   infl:2, iRate:3,
-  herYear:2034, herOther:95147, // Part (50%) projetée des actifs financiers net de droits de succession (~6 113 € de taxes)
+  herYear:2034, herOther:95147,
   pension:1650, pensionYear:2045
 };
-let mode='real', tab='total', chartInst=null, rows=[]; // Valeurs réelles par défaut
+let mode='real', tab='total', chartInst=null, rows=[];
 
 // ── Utilitaires ──────────────────────────────────────────────────────────
 function fmt(v,c){
@@ -339,14 +348,29 @@ function updateKPIs(){
     document.getElementById(id+'-l').textContent='Revenus : '+fmt(vk(d,'lm'),false)+'/mois';
   });
 }
+
 function updateTable(){
   const tb=document.getElementById('tbl-body'); tb.innerHTML='';
+  
+  // Années de fin d'emprunt calculées dynamiquement
+  const loanEndYears = getLoanEndYears();
+
   MILESTONES.forEach(y=>{
     const d=find(y); if(!d) return;
-    const hl=HL.includes(y);
-    const mk=y===2045?' &#127937;':y===2033||y===2035||y===2043?' ✓':'';
-    const tr=document.createElement('tr'); if(hl)tr.className='hl';
-    tr.innerHTML=`<td style="font-weight:${hl?600:400}">${y}${mk}</td>`
+    const isPensionYear = (y === p.pensionYear);
+    const isLoanEnd = loanEndYears.includes(y);
+    const isHerYear = (y === p.herYear);
+
+    // Icônes dynamiques : Drapeau pour la retraite, Coche pour fin d'emprunt ou année d'héritage
+    let mk = '';
+    if (isPensionYear) {
+      mk = ' &#127937;';
+    } else if (isLoanEnd || isHerYear) {
+      mk = ' &#10003;';
+    }
+
+    const tr=document.createElement('tr'); if(isPensionYear) tr.className='hl';
+    tr.innerHTML=`<td style="font-weight:${isPensionYear?600:400}">${y}${mk}</td>`
       +`<td style="color:var(--tx3)">${d.age}</td>`
       +`<td style="color:#eda100">${fmt(vk(d,'w'),false)}</td>`
       +`<td style="color:#1baf7a">${fmt(vk(d,'e'),false)}</td>`
@@ -372,7 +396,7 @@ function renderChart(){
   const yrs=rows.map(r=>String(r.year));
 
   const refDefs=[
-    [2045,C.e,'Pension'],
+    [p.pensionYear,C.e,'Pension'],
     [2033,'#bbb','NOH libre'],
     [2035,'#bbb','Strbk libre'],
     [2043,'#bbb','Maison libre'],
