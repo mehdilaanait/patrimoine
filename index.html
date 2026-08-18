@@ -86,8 +86,8 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   <div class="hdr-r">
     <span class="auto-badge" id="date-badge">&#8987; &hellip;</span>
     <div style="display:flex;gap:6px;">
-      <button class="mbtn active" id="btn-nom" onclick="setMode('nom')">Nominal</button>
-      <button class="mbtn" id="btn-real" onclick="setMode('real')">R&eacute;el (&euro; 2026)</button>
+      <button class="mbtn" id="btn-nom" onclick="setMode('nom')">Nominal</button>
+      <button class="mbtn active" id="btn-real" onclick="setMode('real')">R&eacute;el (&euro; 2026)</button>
     </div>
   </div>
 </div>
@@ -165,12 +165,10 @@ const LD={
   strombeek:{P:115000, r:213.90/115000, M:594.49, start:[2015,10], n:240, share:1},
   noh1:     {P:103000, r:139.05/103000, M:644.94, start:[2018,10], n:180, share:1},
   noh2:     {P:12000,  r:16.20/12000,   M:75.14,  start:[2018,10], n:180, share:1},
-  // Maison : prêts complets, share=0.65 appliqué dans pPassif/pMens
   maison1:  {P:190013.94, r:429.43/190013.94, M:1026.63, start:[2024,0], n:240, share:0.65},
   maison2:  {P:82614.76,  r:186.71/82614.76,  M:446.36,  start:[2024,0], n:240, share:0.65},
 };
 
-// Solde après k mensualités (formule exacte, valeur brute sans share)
 function lbal(def, asOf){
   const [sy,sm]=def.start;
   const k=(asOf.getFullYear()-sy)*12+(asOf.getMonth()-sm)+1;
@@ -180,17 +178,15 @@ function lbal(def, asOf){
   return Math.max(0, def.P*pw - def.M*(pw-1)/def.r);
 }
 
-// Date de fin lisible
 function lend(def){
   const tm=def.start[1]+def.n-1;
   return MFR[tm%12]+' '+(def.start[0]+Math.floor(tm/12));
 }
 
-// Mensualité effective pour une année (valeur brute, hors share)
 function lmont(def, y){
   const [sy,sm]=def.start;
-  const kA=(y-sy)*12+(0-sm)+1;   // janvier de l'année y
-  const kZ=kA+11;                   // décembre de l'année y
+  const kA=(y-sy)*12+(0-sm)+1;
+  const kZ=kA+11;
   if(kZ<=0||kA>def.n) return 0;
   const months=Math.min(def.n,kZ)-Math.max(0,kA)+1;
   return def.M*Math.max(0,Math.min(12,months))/12;
@@ -212,10 +208,10 @@ let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
   infl:2, iRate:3,
-  herYear:2034, herOther:96000,
+  herYear:2034, herOther:95147, // Part (50%) projetée des actifs financiers net de droits de succession (~6 113 € de taxes)
   pension:1650, pensionYear:2045
 };
-let mode='nom', tab='total', chartInst=null, rows=[];
+let mode='real', tab='total', chartInst=null, rows=[]; // Valeurs réelles par défaut
 
 // ── Utilitaires ──────────────────────────────────────────────────────────
 function fmt(v,c){
@@ -313,13 +309,8 @@ function calc(){
     const imN=io-passif;
     const tot=w+e+imN+ip+herO;
     
-    // Loyers propres nets des mensualités (indexés)
     const lOwn=propOwn.reduce((s,prop)=>s+Math.max(0,prop.loyer*inf-pMens(prop,y)),0);
-    
-    // Indexation cumulative des loyers parentaux depuis 2026
     const lPar=y>=p.herYear ? pa.l * inf : 0;
-    
-    // Pension légale ajustée selon l'inflation jusqu'au départ en retraite
     const lPen=y>=p.pensionYear ? p.pension * inf : 0;
     
     const lT=lOwn+lPar+lPen;
@@ -380,7 +371,6 @@ function renderChart(){
   const ttBd=dark?'rgba(255,255,255,0.12)':'rgba(0,0,0,0.1)';
   const yrs=rows.map(r=>String(r.year));
 
-  // Lignes de référence verticales
   const refDefs=[
     [2045,C.e,'Pension'],
     [2033,'#bbb','NOH libre'],
@@ -602,6 +592,10 @@ function initControls(){
   const now=new Date();
   document.getElementById('date-badge').textContent=
     '⧗ Soldes au '+MFR[now.getMonth()]+' '+now.getFullYear();
+  
+  document.getElementById('btn-nom').classList.remove('active');
+  document.getElementById('btn-real').classList.add('active');
+
   renderProps('own');
   renderProps('par');
 }
