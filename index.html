@@ -72,7 +72,7 @@ table{width:100%;border-collapse:collapse;white-space:nowrap;}
 th{padding:7px 11px;text-align:right;color:var(--tx3);font-weight:400;font-size:10px;border-bottom:0.5px solid var(--bd);}
 th:first-child{text-align:left;}
 td{padding:7px 11px;text-align:right;border-top:0.5px solid var(--bd);}
-td:first-child{text-align:left;}
+td:first-child{text-child:left;}
 tr.hl td{background:var(--acc-bg);}
 tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
 @media(max-width:700px){.body{flex-direction:column;}.side{width:100%;max-height:none;position:relative;top:0;border-right:none;border-bottom:0.5px solid var(--bd);}.kpi-grid{grid-template-columns:1fr;}.main{padding:12px;}}
@@ -96,13 +96,16 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   <div class="sh">TAUX</div>
   <div class="sr"><div class="sl-lbl"><span>Wealins</span><span class="sl-v" id="lbl-wRate" style="color:#eda100"></span></div><input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updSlider('wRate',this.value)" style="accent-color:#eda100"></div>
   <div class="sr"><div class="sl-lbl"><span>EIP Branche 23</span><span class="sl-v" id="lbl-eRate" style="color:#1baf7a"></span></div><input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updSlider('eRate',this.value)" style="accent-color:#1baf7a"></div>
+  <div class="sr"><div class="sl-lbl"><span>Wealins par. (Lux)</span><span class="sl-v" id="lbl-parWRate" style="color:#4a3aa7"></span></div><input type="range" min="0" max="12" step="0.5" id="sl-parWRate" oninput="updSlider('parWRate',this.value)" style="accent-color:#4a3aa7"></div>
   <div class="sr"><div class="sl-lbl"><span>Inflation</span><span class="sl-v" id="lbl-infl" style="color:var(--tx3)"></span></div><input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updSlider('infl',this.value)"></div>
   <div class="sr"><div class="sl-lbl"><span>App&eacute;ciation immo</span><span class="sl-v" id="lbl-iRate" style="color:#2a78d6"></span></div><input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updSlider('iRate',this.value)" style="accent-color:#2a78d6"></div>
+  
   <div class="sh">MES BIENS IMMOBILIERS</div>
   <div id="props-own"></div>
   <div class="sh">BIENS PARENTAUX &mdash; MA PART</div>
   <div id="props-par"></div>
-  <div class="sh">ACTIFS FINANCIERS</div>
+  
+  <div class="sh">ACTIFS FINANCIERS PROPRES</div>
   <div class="fi">
     <label>Wealins actuel (&euro;) &mdash; ou importer :</label>
     <div class="pdf-row">
@@ -114,13 +117,17 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   </div>
   <div class="fi"><label>Versement ao&ucirc;t 2027 (&euro;)</label><input type="number" id="f-v2027" oninput="updField('v2027',this.value)"></div>
   <div class="fi"><label>EIP actuel (&euro;)</label><input type="number" id="f-eBase" oninput="updField('eBase',this.value)"></div>
-  <div class="sh">H&Eacute;RITAGE</div>
+  
+  <div class="sh">H&Eacute;RITAGE PARENTAL</div>
   <div class="fi"><label>Ann&eacute;e h&eacute;ritage</label><input type="number" id="f-herYear" oninput="updField('herYear',this.value)"></div>
-  <div class="fi"><label>Actifs financiers nets (&euro;)</label><input type="number" id="f-herOther" oninput="updField('herOther',this.value)"></div>
+  <div class="fi"><label>Wealins Luxembourg 2026 (&euro;)</label><input type="number" id="f-parWBase" oninput="updField('parWBase',this.value)"></div>
+  <div class="fi"><label>Compte &eacute;pargne 2026 (&euro;)</label><input type="number" id="f-parCash" oninput="updField('parCash',this.value)"></div>
+  
   <div class="sh">PENSION L&Eacute;GALE</div>
   <div class="fi"><label>Montant mensuel (&euro;)</label><input type="number" id="f-pension" oninput="updField('pension',this.value)"></div>
   <div class="fi"><label>&Agrave; partir de (ann&eacute;e)</label><input type="number" id="f-pensionYear" oninput="updField('pensionYear',this.value)"></div>
 </div>
+
 <div class="main">
   <div class="kpi-grid">
     <div class="kpi-card"><div class="kpi-lbl">2030 &mdash; 52 ans</div><div class="kpi-val" id="kpi-2030" style="color:var(--tx2)">—</div><div class="kpi-sub" id="kpi-2030-l">—</div></div>
@@ -159,7 +166,7 @@ const MILESTONES=[2026,2027,2028,2030,2033,2034,2035,2038,2043,2045,2050];
 const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
 const MFR=['janv.',`févr.`,'mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.',`déc.`];
 
-// ── Prêts (tableaux d'amortissement BNPP Fortis) ───────────────────────────
+// ── Prêts (BNPP Fortis) ────────────────────────────────────────────────────
 const LD={
   strombeek:{P:115000, r:213.90/115000, M:594.49, start:[2015,10], n:240, share:1},
   noh1:     {P:103000, r:139.05/103000, M:644.94, start:[2018,10], n:180, share:1},
@@ -191,12 +198,10 @@ function lmont(def, y){
   return def.M*Math.max(0,Math.min(12,months))/12;
 }
 
-// Calcule dynamiquement les années de fin de tous les emprunts enregistrés
 function getLoanEndYears(){
   const years = new Set();
   Object.values(LD).forEach(def => {
-    const endYear = def.start[0] + Math.floor((def.start[1] + def.n - 1) / 12);
-    years.add(endYear);
+    years.add(def.start[0] + Math.floor((def.start[1] + def.n - 1) / 12));
   });
   return Array.from(years);
 }
@@ -217,7 +222,8 @@ let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
   infl:2, iRate:3,
-  herYear:2034, herOther:95147,
+  herYear:2034, 
+  parWBase:110000, parWRate:5, parCash:40000, // Capitalisation dynamique du Wealins parental
   pension:1650, pensionYear:2045
 };
 let mode='real', tab='total', chartInst=null, rows=[];
@@ -238,7 +244,7 @@ function esc(s){
 function sO(){return{l:propOwn.reduce((s,x)=>s+x.loyer,0),v:propOwn.reduce((s,x)=>s+x.valeur,0)};}
 function sP(){return{l:propPar.reduce((s,x)=>s+x.loyer,0),v:propPar.reduce((s,x)=>s+x.valeur,0)};}
 
-// ── Passif et mensualité par bien ─────────────────────────────────────────
+// ── Passif et mensualité ──────────────────────────────────────────────────
 function pPassif(prop, y){
   if(prop.loans&&prop.loans.length){
     const sh=prop.share||1;
@@ -310,11 +316,20 @@ function calc(){
   rows=[];
   const o=sO(), pa=sP();
   let w=p.wBase, e=p.eBase, io=o.v, ip=0;
+  
+  // Calcul dynamique de la valeur nette des actifs financiers parentaux au moment de l'héritage
+  const nHer = Math.max(0, p.herYear - Y0);
+  const parWProjete = p.parWBase * Math.pow(1 + p.parWRate/100, nHer);
+  const parFinancierBrut = (parWProjete + p.parCash) / 2; // Part de 50%
+  // Droits de succession progressifs estimés en ligne directe (ex. Flandre/Wallonie ~6%)
+  const taxeEstim = Math.min(parFinancierBrut * 0.03, 1500) + Math.max(0, parFinancierBrut - 50000) * 0.09;
+  const herOtherNet = Math.max(0, parFinancierBrut - taxeEstim);
+
   for(let y=Y0;y<=Y1;y++){
     const n=y-Y0, age=y-BIRTH;
     const inf=Math.pow(1+p.infl/100,n), rf=1/inf;
     const passif=propOwn.reduce((s,prop)=>s+pPassif(prop,y),0);
-    const herO=y>=p.herYear?p.herOther:0;
+    const herO=y>=p.herYear?herOtherNet:0;
     const imN=io-passif;
     const tot=w+e+imN+ip+herO;
     
@@ -351,8 +366,6 @@ function updateKPIs(){
 
 function updateTable(){
   const tb=document.getElementById('tbl-body'); tb.innerHTML='';
-  
-  // Années de fin d'emprunt calculées dynamiquement
   const loanEndYears = getLoanEndYears();
 
   MILESTONES.forEach(y=>{
@@ -361,7 +374,6 @@ function updateTable(){
     const isLoanEnd = loanEndYears.includes(y);
     const isHerYear = (y === p.herYear);
 
-    // Icônes dynamiques : Drapeau pour la retraite, Coche pour fin d'emprunt ou année d'héritage
     let mk = '';
     if (isPensionYear) {
       mk = ' &#127937;';
@@ -606,11 +618,11 @@ function updSlider(k,v){
 function updField(k,v){p[k]=parseFloat(v)||0;refresh();}
 
 function initControls(){
-  ['wRate','eRate','infl','iRate'].forEach(k=>{
+  ['wRate','eRate','parWRate','infl','iRate'].forEach(k=>{
     document.getElementById('sl-'+k).value=p[k];
     document.getElementById('lbl-'+k).textContent=p[k]+'%';
   });
-  ['wBase','v2027','eBase','herYear','herOther','pension','pensionYear'].forEach(k=>{
+  ['wBase','v2027','eBase','herYear','parWBase','parCash','pension','pensionYear'].forEach(k=>{
     const el=document.getElementById('f-'+k); if(el) el.value=p[k];
   });
   const now=new Date();
