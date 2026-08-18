@@ -5,162 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vision Patrimoniale · Mehdi</title>
 <style>
-:root {
-  --bg: #f9f9f8; --surface: #ffffff; --surface2: #f5f4f0;
-  --text: #0b0b0b; --text2: #52514e; --text3: #898781;
-  --border: rgba(11,11,11,0.10); --border2: rgba(11,11,11,0.15);
-  --accent: #2a78d6; --accent-bg: #e6f1fb; --accent-text: #185fa5;
-  --success: #0f6e56; --success-bg: #e1f5ee;
-  --radius: 8px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111110; --surface: #1a1a19; --surface2: #232322;
-    --text: #f0efec; --text2: #c3c2b7; --text3: #898781;
-    --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.15);
-    --accent: #3987e5; --accent-bg: #0c2040; --accent-text: #85b7eb;
-    --success: #1d9e75; --success-bg: #04342c;
-  }
-}
+:root{--bg:#f9f9f8;--sf:#fff;--sf2:#f5f4f0;--tx:#0b0b0b;--tx2:#52514e;--tx3:#898781;--bd:rgba(11,11,11,0.10);--bd2:rgba(11,11,11,0.18);--acc:#2a78d6;--acc-bg:#e6f1fb;--acc-tx:#185fa5;--ok:#0f6e56;--ok-bg:#e1f5ee;--r:8px;}
+@media(prefers-color-scheme:dark){:root{--bg:#111110;--sf:#1a1a19;--sf2:#232322;--tx:#f0efec;--tx2:#c3c2b7;--tx3:#898781;--bd:rgba(255,255,255,0.10);--bd2:rgba(255,255,255,0.18);--acc:#3987e5;--acc-bg:#0c2040;--acc-tx:#85b7eb;--ok:#1d9e75;--ok-bg:#04342c;}}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);font-size:13px;min-height:100vh;}
 .app{display:flex;flex-direction:column;min-height:100vh;}
-.hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:0.5px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:10;}
-.hdr-eyebrow{font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:3px;}
-.hdr-title{font-size:18px;font-weight:500;color:var(--text);}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:11px 20px;border-bottom:0.5px solid var(--bd);background:var(--sf);flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:10;}
+.hdr-ey{font-size:10px;color:var(--tx3);letter-spacing:2px;margin-bottom:2px;}
+.hdr-nm{font-size:17px;font-weight:500;}
+.hdr-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.auto-badge{font-size:10px;background:var(--ok-bg);color:var(--ok);padding:3px 8px;border-radius:20px;font-weight:500;}
 .mode-btns{display:flex;gap:6px;}
-.mode-btn{padding:5px 13px;border-radius:var(--radius);cursor:pointer;font-size:12px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-family:inherit;}
-.mode-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent-text);font-weight:500;}
+.mbtn{padding:5px 12px;border-radius:var(--r);cursor:pointer;font-size:12px;border:0.5px solid var(--bd2);background:transparent;color:var(--tx2);font-family:inherit;}
+.mbtn.active{border-color:var(--acc);background:var(--acc-bg);color:var(--acc-tx);font-weight:500;}
 .body{display:flex;flex:1;}
-.side{width:240px;min-width:240px;border-right:0.5px solid var(--border);padding:14px 13px;background:var(--surface);overflow-y:auto;}
-.main{flex:1;padding:18px;overflow-y:auto;}
-.sec-hdr{font-size:9px;letter-spacing:1.5px;color:var(--text3);font-weight:600;border-bottom:0.5px solid var(--border);padding-bottom:5px;margin-bottom:10px;margin-top:16px;}
-.sec-hdr:first-child{margin-top:0;}
-.slider-row{margin-bottom:12px;}
-.slider-label{display:flex;justify-content:space-between;margin-bottom:3px;font-size:12px;color:var(--text2);}
-.slider-val{font-weight:600;font-size:12px;}
-input[type=range]{width:100%;height:4px;cursor:pointer;}
-.field{margin-bottom:8px;}
-.field label{display:block;font-size:11px;color:var(--text3);margin-bottom:3px;}
-.field input[type=number]{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:5px 9px;font-size:12px;font-family:inherit;outline:none;}
-.field input[type=number]:focus{border-color:var(--accent);}
+.side{width:256px;min-width:256px;border-right:0.5px solid var(--bd);padding:12px;background:var(--sf);overflow-y:auto;max-height:calc(100vh - 52px);position:sticky;top:52px;}
+.main{flex:1;padding:16px;overflow-y:auto;}
+.sh{font-size:9px;letter-spacing:1.5px;color:var(--tx3);font-weight:600;border-bottom:0.5px solid var(--bd);padding-bottom:4px;margin-bottom:9px;margin-top:14px;}
+.sh:first-child{margin-top:2px;}
+.sr{margin-bottom:11px;}
+.sl-lbl{display:flex;justify-content:space-between;margin-bottom:3px;font-size:12px;color:var(--tx2);}
+.sl-v{font-weight:600;font-size:12px;}
+input[type=range]{width:100%;cursor:pointer;}
+.fi{margin-bottom:7px;}
+.fi label{display:block;font-size:11px;color:var(--tx3);margin-bottom:2px;}
+.fi input[type=number]{width:100%;background:var(--sf2);border:0.5px solid var(--bd2);border-radius:var(--r);color:var(--tx);padding:4px 8px;font-size:12px;font-family:inherit;outline:none;}
+.fi input[type=number]:focus{border-color:var(--acc);}
+/* Property cards */
+.prop-item{border:0.5px solid var(--bd);border-radius:8px;padding:8px 9px;margin-bottom:7px;background:var(--sf2);}
+.pi-r1{display:flex;gap:5px;align-items:center;margin-bottom:5px;}
+.pi-name{flex:1;background:transparent;border:none;border-bottom:0.5px solid var(--bd2);color:var(--tx);font-size:12px;font-weight:500;padding:1px 2px;font-family:inherit;outline:none;}
+.pi-name:focus{border-bottom-color:var(--acc);}
+.pi-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:15px;padding:0 2px;line-height:1;flex-shrink:0;}
+.pi-del:hover{color:#e34948;}
+.pi-g2{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px;}
+.pi-f{display:flex;flex-direction:column;gap:2px;}
+.pi-f span{font-size:10px;color:var(--tx3);}
+.pi-f input{width:100%;background:var(--sf);border:0.5px solid var(--bd2);border-radius:4px;color:var(--tx);padding:3px 5px;font-size:11px;font-family:inherit;outline:none;}
+.pi-f input:focus{border-color:var(--acc);}
+.loan-info{margin-top:6px;padding:5px 7px;background:var(--ok-bg);border-radius:5px;font-size:10px;color:var(--ok);line-height:1.6;}
+.loan-info strong{font-weight:600;}
+.prop-add{background:none;border:0.5px dashed var(--bd2);border-radius:var(--r);width:100%;padding:4px;font-size:11px;color:var(--tx3);cursor:pointer;margin-top:4px;font-family:inherit;}
+.prop-add:hover{border-color:var(--acc);color:var(--acc);}
+.prop-tot{font-size:11px;color:var(--tx2);margin-top:6px;padding-top:5px;border-top:0.5px solid var(--bd);}
+.prop-tot strong{color:var(--tx);}
+/* Main */
 .kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;}
-.kpi-card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:12px 14px;}
-.kpi-lbl{font-size:11px;color:var(--text3);margin-bottom:4px;}
-.kpi-val{font-size:22px;font-weight:500;margin-bottom:2px;line-height:1.1;}
-.kpi-sub{font-size:11px;color:var(--text2);}
-.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.tab-btn{padding:6px 14px;border-radius:var(--radius);cursor:pointer;font-size:12px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-family:inherit;}
-.tab-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent-text);font-weight:500;}
-.chart-box{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:14px 6px 8px;margin-bottom:14px;}
-.legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 10px 8px;font-size:11px;color:var(--text2);}
-.leg-item{display:flex;align-items:center;gap:5px;}
-.leg-sq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
-.table-box{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;}
-.table-hdr{padding:10px 16px;border-bottom:0.5px solid var(--border);font-size:9px;letter-spacing:2px;color:var(--text3);font-weight:600;}
-.tbl-wrap{overflow-x:auto;}
+.kpi-card{background:var(--sf);border:0.5px solid var(--bd);border-radius:12px;padding:11px 13px;}
+.kpi-lbl{font-size:11px;color:var(--tx3);margin-bottom:4px;}
+.kpi-val{font-size:21px;font-weight:500;margin-bottom:2px;line-height:1.1;}
+.kpi-sub{font-size:11px;color:var(--tx2);}
+.tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap;}
+.tbtn{padding:5px 13px;border-radius:var(--r);cursor:pointer;font-size:12px;border:0.5px solid var(--bd2);background:transparent;color:var(--tx2);font-family:inherit;}
+.tbtn.active{border-color:var(--acc);background:var(--acc-bg);color:var(--acc-tx);font-weight:500;}
+.chart-box{background:var(--sf);border:0.5px solid var(--bd);border-radius:12px;padding:12px 4px 6px;margin-bottom:12px;}
+.legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 10px 8px;font-size:11px;color:var(--tx2);}
+.li{display:flex;align-items:center;gap:5px;}
+.lsq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.tbox{background:var(--sf);border:0.5px solid var(--bd);border-radius:12px;overflow:hidden;}
+.tbox-h{padding:9px 14px;border-bottom:0.5px solid var(--bd);font-size:9px;letter-spacing:2px;color:var(--tx3);font-weight:600;}
+.tw{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;white-space:nowrap;}
-th{padding:8px 12px;text-align:right;color:var(--text3);font-weight:400;font-size:10px;border-bottom:0.5px solid var(--border);}
+th{padding:7px 11px;text-align:right;color:var(--tx3);font-weight:400;font-size:10px;border-bottom:0.5px solid var(--bd);}
 th:first-child{text-align:left;}
-td{padding:8px 12px;text-align:right;border-top:0.5px solid var(--border);color:var(--text);}
+td{padding:7px 11px;text-align:right;border-top:0.5px solid var(--bd);}
 td:first-child{text-align:left;}
-tr.hl td{background:var(--accent-bg);}
-tr.hl td:first-child{color:var(--accent-text);font-weight:500;}
-@media(max-width:700px){
-  .body{flex-direction:column;}
-  .side{width:100%;border-right:none;border-bottom:0.5px solid var(--border);}
-  .kpi-grid{grid-template-columns:1fr;}
-  .hdr{padding:10px 14px;}
-  .main{padding:12px;}
-}
+tr.hl td{background:var(--acc-bg);}
+tr.hl td:first-child{color:var(--acc-tx);font-weight:500;}
+@media(max-width:700px){.body{flex-direction:column;}.side{width:100%;max-height:none;position:relative;top:0;border-right:none;border-bottom:0.5px solid var(--bd);}.kpi-grid{grid-template-columns:1fr;}.main{padding:12px;}.hdr-r{gap:4px;}}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="hdr">
-  <div>
-    <div class="hdr-eyebrow">VISION PATRIMONIALE</div>
-    <div class="hdr-title">Mehdi · 2026–2050</div>
-  </div>
-  <div class="mode-btns">
-    <button class="mode-btn active" id="btn-nom" onclick="setMode('nom')">Nominal</button>
-    <button class="mode-btn" id="btn-real" onclick="setMode('real')">Réel (€ 2026)</button>
+  <div><div class="hdr-ey">VISION PATRIMONIALE</div><div class="hdr-nm">Mehdi · 2026–2050</div></div>
+  <div class="hdr-r">
+    <span class="auto-badge" id="date-badge">⟳ chargement…</span>
+    <div class="mode-btns">
+      <button class="mbtn active" id="btn-nom" onclick="setMode('nom')">Nominal</button>
+      <button class="mbtn" id="btn-real" onclick="setMode('real')">Réel (€ 2026)</button>
+    </div>
   </div>
 </div>
-
 <div class="body">
 <div class="side">
-  <div class="sec-hdr">TAUX</div>
-  <div class="slider-row">
-    <div class="slider-label"><span>Wealins</span><span class="slider-val" id="lbl-wRate" style="color:#eda100"></span></div>
-    <input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updateSlider('wRate',this.value)" style="accent-color:#eda100">
-  </div>
-  <div class="slider-row">
-    <div class="slider-label"><span>EIP Branche 23</span><span class="slider-val" id="lbl-eRate" style="color:#1baf7a"></span></div>
-    <input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updateSlider('eRate',this.value)" style="accent-color:#1baf7a">
-  </div>
-  <div class="slider-row">
-    <div class="slider-label"><span>Inflation</span><span class="slider-val" id="lbl-infl" style="color:var(--text3)"></span></div>
-    <input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updateSlider('infl',this.value)">
-  </div>
-  <div class="slider-row">
-    <div class="slider-label"><span>Appréciation immo</span><span class="slider-val" id="lbl-iRate" style="color:#2a78d6"></span></div>
-    <input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updateSlider('iRate',this.value)" style="accent-color:#2a78d6">
-  </div>
+  <div class="sh">TAUX</div>
+  <div class="sr"><div class="sl-lbl"><span>Wealins</span><span class="sl-v" id="lbl-wRate" style="color:#eda100"></span></div><input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updateSlider('wRate',this.value)" style="accent-color:#eda100"></div>
+  <div class="sr"><div class="sl-lbl"><span>EIP Branche 23</span><span class="sl-v" id="lbl-eRate" style="color:#1baf7a"></span></div><input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updateSlider('eRate',this.value)" style="accent-color:#1baf7a"></div>
+  <div class="sr"><div class="sl-lbl"><span>Inflation</span><span class="sl-v" id="lbl-infl" style="color:var(--tx3)"></span></div><input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updateSlider('infl',this.value)"></div>
+  <div class="sr"><div class="sl-lbl"><span>Appréciation immo</span><span class="sl-v" id="lbl-iRate" style="color:#2a78d6"></span></div><input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updateSlider('iRate',this.value)" style="accent-color:#2a78d6"></div>
 
-  <div class="sec-hdr">ACTIFS FINANCIERS</div>
-  <div class="field"><label>Wealins actuel (€)</label><input type="number" id="f-wBase" oninput="updateField('wBase',this.value)"></div>
-  <div class="field"><label>Versement août 2027 (€)</label><input type="number" id="f-v2027" oninput="updateField('v2027',this.value)"></div>
-  <div class="field"><label>EIP actuel (€)</label><input type="number" id="f-eBase" oninput="updateField('eBase',this.value)"></div>
+  <div class="sh">MES BIENS IMMOBILIERS</div>
+  <div id="props-own"></div>
 
-  <div class="sec-hdr">IMMOBILIER</div>
-  <div class="field"><label>Valeur biens actuels (€)</label><input type="number" id="f-iVal" oninput="updateField('iVal',this.value)"></div>
-  <div class="field"><label>Passif hypothécaire (€)</label><input type="number" id="f-iPas" oninput="updateField('iPas',this.value)"></div>
-  <div class="field"><label>Loyers actuels (€/mois)</label><input type="number" id="f-loyers" oninput="updateField('loyers',this.value)"></div>
-  <div class="field"><label>Fin hypothèques (année)</label><input type="number" id="f-hypoEnd" oninput="updateField('hypoEnd',this.value)"></div>
+  <div class="sh">BIENS PARENTAUX — MA PART</div>
+  <div id="props-par"></div>
 
-  <div class="sec-hdr">HÉRITAGE</div>
-  <div class="field"><label>Année héritage</label><input type="number" id="f-herYear" oninput="updateField('herYear',this.value)"></div>
-  <div class="field"><label>Immo parentale nette (€)</label><input type="number" id="f-herImmo" oninput="updateField('herImmo',this.value)"></div>
-  <div class="field"><label>Autres actifs nets (€)</label><input type="number" id="f-herOther" oninput="updateField('herOther',this.value)"></div>
-  <div class="field"><label>Loyers parentaux (€/mois)</label><input type="number" id="f-herLoyers" oninput="updateField('herLoyers',this.value)"></div>
+  <div class="sh">ACTIFS FINANCIERS</div>
+  <div class="fi"><label>Wealins actuel (€)</label><input type="number" id="f-wBase" oninput="updateField('wBase',this.value)"></div>
+  <div class="fi"><label>Versement août 2027 (€)</label><input type="number" id="f-v2027" oninput="updateField('v2027',this.value)"></div>
+  <div class="fi"><label>EIP actuel (€)</label><input type="number" id="f-eBase" oninput="updateField('eBase',this.value)"></div>
+
+  <div class="sh">HÉRITAGE</div>
+  <div class="fi"><label>Année héritage</label><input type="number" id="f-herYear" oninput="updateField('herYear',this.value)"></div>
+  <div class="fi"><label>Autres actifs nets (€)</label><input type="number" id="f-herOther" oninput="updateField('herOther',this.value)"></div>
+
+  <div class="sh">PENSION LÉGALE</div>
+  <div class="fi"><label>Montant mensuel (€)</label><input type="number" id="f-pension" oninput="updateField('pension',this.value)"></div>
+  <div class="fi"><label>À partir de (année)</label><input type="number" id="f-pensionYear" oninput="updateField('pensionYear',this.value)"></div>
 </div>
 
 <div class="main">
   <div class="kpi-grid">
-    <div class="kpi-card"><div class="kpi-lbl">2030 — 52 ans</div><div class="kpi-val" id="kpi-2030" style="color:var(--text2)">—</div><div class="kpi-sub" id="kpi-2030-l">—</div></div>
-    <div class="kpi-card" style="border-color:var(--success)"><div class="kpi-lbl">🎯 Retraite — 56 ans</div><div class="kpi-val" id="kpi-2034" style="color:var(--success)">—</div><div class="kpi-sub" id="kpi-2034-l">—</div></div>
-    <div class="kpi-card" style="border-color:var(--accent)"><div class="kpi-lbl">🏁 Pension — 67 ans</div><div class="kpi-val" id="kpi-2043" style="color:var(--accent)">—</div><div class="kpi-sub" id="kpi-2043-l">—</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">2030 — 52 ans</div><div class="kpi-val" id="kpi-2030" style="color:var(--tx2)">—</div><div class="kpi-sub" id="kpi-2030-l">—</div></div>
+    <div class="kpi-card" style="border-color:var(--ok)"><div class="kpi-lbl">🎯 Retraite — 56 ans</div><div class="kpi-val" id="kpi-2034" style="color:var(--ok)">—</div><div class="kpi-sub" id="kpi-2034-l">—</div></div>
+    <div class="kpi-card" style="border-color:var(--acc)"><div class="kpi-lbl">🏁 Pension — 67 ans</div><div class="kpi-val" id="kpi-2045" style="color:var(--acc)">—</div><div class="kpi-sub" id="kpi-2045-l">—</div></div>
   </div>
-
   <div class="tabs">
-    <button class="tab-btn active" id="tab-total" onclick="setTab('total')">Patrimoine total</button>
-    <button class="tab-btn" id="tab-breakdown" onclick="setTab('breakdown')">Par actif</button>
-    <button class="tab-btn" id="tab-income" onclick="setTab('income')">Revenus locatifs</button>
+    <button class="tbtn active" id="tab-total" onclick="setTab('total')">Patrimoine total</button>
+    <button class="tbtn" id="tab-breakdown" onclick="setTab('breakdown')">Par actif</button>
+    <button class="tbtn" id="tab-income" onclick="setTab('income')">Revenus mensuels</button>
   </div>
-
   <div class="chart-box">
     <div class="legend" id="chart-legend"></div>
-    <div style="position:relative;width:100%;height:280px;">
-      <canvas id="mainChart"></canvas>
-    </div>
+    <div style="position:relative;width:100%;height:275px;"><canvas id="mainChart"></canvas></div>
   </div>
-
-  <div class="table-box">
-    <div class="table-hdr">JALONS CLÉS</div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr>
-          <th>Année</th><th>Âge</th>
-          <th style="color:#eda100">Wealins</th>
-          <th style="color:#1baf7a">EIP</th>
-          <th style="color:#2a78d6">Immo net</th>
-          <th style="color:#4a3aa7">Héritage+</th>
-          <th>Total</th><th>€/mois</th>
-        </tr></thead>
-        <tbody id="tbl-body"></tbody>
-      </table>
-    </div>
+  <div class="tbox">
+    <div class="tbox-h">JALONS CLÉS</div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th>Année</th><th>Âge</th>
+        <th style="color:#eda100">Wealins</th><th style="color:#1baf7a">EIP</th>
+        <th style="color:#2a78d6">Immo net</th><th style="color:#4a3aa7">Héritage+</th>
+        <th>Total</th><th>Revenus/mois</th>
+      </tr></thead>
+      <tbody id="tbl-body"></tbody>
+    </table></div>
   </div>
 </div>
 </div>
@@ -168,152 +148,331 @@ tr.hl td:first-child{color:var(--accent-text);font-weight:500;}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const BIRTH=1978,Y0=2026,Y1=2050;
-const MILESTONES=[2026,2027,2028,2030,2034,2038,2043,2050];
-const HL=[2034,2043];
-const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7'};
+// ─── Définitions des prêts (tableaux d'amortissement BNP Paribas Fortis) ───
+// Les soldes sont recalculés automatiquement chaque fois que la page est ouverte.
+const LOAN_DEFS = {
+  // Strombeek : Avance 009-7557108-37
+  // Démarrage nov. 2015 · 115 000€ · 2,232%/an · 240 mensualités de 594,49€
+  strombeek: {
+    P: 115000,
+    r: 213.90 / 115000,   // taux mensuel = intérêts(éch.1) / capital initial
+    M: 594.49,
+    start: [2015, 10],     // [année, mois 0-indexé] = novembre 2015
+    n: 240,
+    label: 'BNPP Fortis · 009-7557108-37 · fin oct. 2035'
+  },
+  // NOH principal : Avance 009-7828169-80
+  // Démarrage nov. 2018 · 103 000€ · 1,62%/an · 180 mensualités de 644,94€
+  noh1: {
+    P: 103000,
+    r: 139.05 / 103000,
+    M: 644.94,
+    start: [2018, 10],
+    n: 180,
+    label: 'BNPP Fortis · 009-7828169-80'
+  },
+  // NOH complément : Avance 009-7830777-69
+  // Démarrage nov. 2018 · 12 000€ · 1,62%/an · 180 mensualités de 75,14€
+  noh2: {
+    P: 12000,
+    r: 16.20 / 12000,
+    M: 75.14,
+    start: [2018, 10],
+    n: 180,
+    label: 'BNPP Fortis · 009-7830777-69 · fin oct. 2033'
+  }
+};
 
-let p={wBase:93398,wRate:7,v2027:20000,eBase:98000,eRate:5,infl:2,iVal:580000,iPas:200000,loyers:1900,hypoEnd:2034,herYear:2034,herImmo:275000,herOther:235000,herLoyers:1800};
-let mode='nom',tab='total',chartInst=null,rows=[];
-
-function fmt(v,compact=true){
-  if(v===null||v===undefined||isNaN(v))return'—';
-  const a=Math.abs(v);
-  if(compact&&a>=1e6)return`${+(v/1e6).toFixed(2)}M €`;
-  if(compact&&a>=1000)return`${Math.round(v/1000)}k €`;
-  return v.toLocaleString('fr-BE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+// ─── Formule d'amortissement : solde après k mensualités ───
+function loanBalance(def, asOf) {
+  const [sy, sm] = def.start;
+  const k = (asOf.getFullYear() - sy) * 12 + (asOf.getMonth() - sm) + 1;
+  if (k <= 0) return def.P;
+  if (k >= def.n) return 0;
+  const pow = Math.pow(1 + def.r, k);
+  return Math.max(0, def.P * pow - def.M * (pow - 1) / def.r);
 }
 
-function calc(){
-  rows=[];
-  let w=p.wBase,e=p.eBase,io=p.iVal,ip=0;
-  for(let y=Y0;y<=Y1;y++){
-    const n=y-Y0,age=y-BIRTH;
-    const inf=Math.pow(1+p.infl/100,n),rf=1/inf;
-    const pas=y<p.hypoEnd?p.iPas*Math.max(0,(p.hypoEnd-y)/(p.hypoEnd-Y0)):0;
-    const herO=y>=p.herYear?p.herOther:0;
-    const imN=io-pas,tot=w+e+imN+ip+herO;
-    const lB=p.loyers*inf;
-    const lP=y>=p.herYear?p.herLoyers*Math.pow(1+p.infl/100,Math.max(0,y-p.herYear)):0;
-    const lT=lB+lP;
-    rows.push({year:y,age,w:Math.round(w),e:Math.round(e),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),wR:Math.round(w*rf),eR:Math.round(e*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),lm:Math.round(lT),la:Math.round(lT*12),lmR:Math.round(lT*rf),laR:Math.round(lT*12*rf)});
-    w*=(1+p.wRate/100);if(y===2027)w+=p.v2027;
+// Mensualité active pour un prêt à une date donnée (0 si terminé)
+function loanMonthly(def, year) {
+  const [sy, sm] = def.start;
+  const kStart = (year - sy) * 12 + (1 - sm) + 1; // Jan de l'année
+  const kEnd   = kStart + 11;                        // Déc de l'année
+  if (kEnd <= 0 || kStart > def.n) return 0;
+  // Proportion de l'année avec mensualité active
+  const monthsActive = Math.min(def.n, kEnd) - Math.max(0, kStart) + 1;
+  return def.M * Math.max(0, Math.min(12, monthsActive)) / 12;
+}
+
+// ─── Données ───
+const BIRTH=1978, Y0=2026, Y1=2050;
+const MILESTONES=[2026,2027,2028,2030,2033,2034,2035,2038,2045,2050];
+const HL=[2034,2045];
+const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
+const MONTHS_FR=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+
+// Biens propres — loans: clés dans LOAN_DEFS, valeur: estimée d'après prix d'achat + 3%/an
+let propOwn = [
+  // Strombeek : acheté 178 000€ en déc. 2011 → ~280 000€ en 2026 à 3%/an
+  { name:'Strombeek', loyer:1000, valeur:280000, loans:['strombeek'] },
+  // NOH : acheté 125 000€ en oct. 2018 → ~160 000€ en 2026 à 3%/an
+  { name:'Neder-Over-Heembeek', loyer:875, valeur:160000, loans:['noh1','noh2'] },
+];
+
+// Biens parentaux (part Mehdi)
+let propPar = [
+  { name:'Appartement (50%)', loyer:550, valeur:110000 },
+  { name:'Studio 1', loyer:635, valeur:100000 },
+  { name:'Studio 2', loyer:475, valeur:100000 },
+];
+
+let p = {
+  wBase:93398, wRate:7, v2027:20000,
+  eBase:98000, eRate:5,
+  infl:2, iRate:3,
+  herYear:2034, herOther:235000,
+  pension:1500, pensionYear:2045
+};
+let mode='nom', tab='total', chartInst=null, rows=[];
+
+// ─── Utilitaires ───
+function fmt(v, compact=true) {
+  if (v===null||v===undefined||isNaN(v)) return '—';
+  const a=Math.abs(v);
+  if (compact&&a>=1e6) return +(v/1e6).toFixed(2)+'M €';
+  if (compact&&a>=1000) return Math.round(v/1000)+'k €';
+  return v.toLocaleString('fr-BE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function sumOwn(){return{l:propOwn.reduce((s,x)=>s+x.loyer,0),v:propOwn.reduce((s,x)=>s+x.valeur,0)};}
+function sumPar(){return{l:propPar.reduce((s,x)=>s+x.loyer,0),v:propPar.reduce((s,x)=>s+x.valeur,0)};}
+
+// Passif exact d'un bien à une année donnée (via formule d'amortissement)
+function propPassif(prop, year) {
+  if (!prop.loans || !prop.loans.length) {
+    // fallback linéaire si pas de prêt défini
+    if (!prop.solde || year >= (prop.hypoEnd||0)) return 0;
+    const tot = Math.max(1,(prop.hypoEnd||year+1)-Y0);
+    return prop.solde * Math.max(0,((prop.hypoEnd||year)-year)/tot);
+  }
+  const d = new Date(year, 0, 1); // 1er janvier de l'année
+  return prop.loans.reduce((s,k)=> LOAN_DEFS[k] ? s+loanBalance(LOAN_DEFS[k],d) : s, 0);
+}
+
+// Mensualité effective d'un bien pour une année (portion annuelle moyenne / 12)
+function propMensualite(prop, year) {
+  if (!prop.loans || !prop.loans.length) {
+    return (year < (prop.hypoEnd||0)) ? (prop.mensualite||0) : 0;
+  }
+  return prop.loans.reduce((s,k)=> LOAN_DEFS[k] ? s+loanMonthly(LOAN_DEFS[k],year) : s, 0);
+}
+
+// ─── Rendu des cartes de biens ───
+function renderProps(type) {
+  const arr = type==='own' ? propOwn : propPar;
+  const id = 'props-'+(type==='own'?'own':'par');
+  const el = document.getElementById(id);
+  const now = new Date();
+
+  let html = arr.map((prop,i) => {
+    const del = `<button class="pi-del" onclick="delProp('${type}',${i})">×</button>`;
+    const nameInp = `<input class="pi-name" value="${esc(prop.name)}" placeholder="Nom" oninput="updProp('${type}',${i},'name',this.value)">`;
+    const loyerF = `<div class="pi-f"><span>Loyer/mois (€)</span><input type="number" value="${prop.loyer}" oninput="updProp('${type}',${i},'loyer',this.value)"></div>`;
+    const valeurF = `<div class="pi-f"><span>Valeur estimée (€)</span><input type="number" value="${prop.valeur}" oninput="updProp('${type}',${i},'valeur',this.value)"></div>`;
+
+    let loanHtml = '';
+    if (type==='own' && prop.loans && prop.loans.length) {
+      const solde = Math.round(prop.loans.reduce((s,k)=>LOAN_DEFS[k]?s+loanBalance(LOAN_DEFS[k],now):s,0));
+      const mens  = Math.round(prop.loans.reduce((s,k)=>LOAN_DEFS[k]?s+LOAN_DEFS[k].M:s,0));
+      const lastKey = prop.loans[prop.loans.length-1];
+      const def = LOAN_DEFS[lastKey];
+      const endDate = def ? `${MONTHS_FR[9]} ${def.start[0]+Math.floor(def.n/12)}` : '';
+      loanHtml = `<div class="loan-info">💳 <strong>${mens}€</strong>/mois · Solde au ${MONTHS_FR[now.getMonth()]} ${now.getFullYear()} : <strong>${fmt(solde,false)}</strong> · Fin <strong>${endDate}</strong></div>`;
+    } else if (type==='own') {
+      const mensF = `<div class="pi-f"><span>Mensualité (€)</span><input type="number" value="${prop.mensualite||0}" oninput="updProp('${type}',${i},'mensualite',this.value)"></div>`;
+      const hypoF = `<div class="pi-f"><span>Fin emprunt</span><input type="number" value="${prop.hypoEnd||2026}" oninput="updProp('${type}',${i},'hypoEnd',this.value)"></div>`;
+      const soldeF = `<div class="pi-f" style="margin-top:4px"><span>Solde restant (€)</span><input type="number" value="${prop.solde||0}" oninput="updProp('${type}',${i},'solde',this.value)"></div>`;
+      loanHtml = `<div class="pi-g2" style="margin-top:4px">${mensF}${hypoF}</div>${soldeF}`;
+    }
+
+    return `<div class="prop-item"><div class="pi-r1">${nameInp}${del}</div><div class="pi-g2">${loyerF}${valeurF}</div>${loanHtml}</div>`;
+  }).join('');
+
+  const tot = type==='own' ? sumOwn() : sumPar();
+  html += `<button class="prop-add" onclick="addProp('${type}')">+ Ajouter un bien</button>`;
+  html += `<div class="prop-tot" id="tot-${type}">Total : <strong>${tot.l}€</strong>/mois · <strong>${fmt(tot.v)}</strong></div>`;
+  el.innerHTML = html;
+}
+
+function addProp(type) {
+  (type==='own'?propOwn:propPar).push({name:'Nouveau bien',loyer:0,valeur:0,mensualite:0,hypoEnd:2026,solde:0});
+  renderProps(type); refresh();
+}
+function delProp(type,idx) {
+  (type==='own'?propOwn:propPar).splice(idx,1);
+  renderProps(type); refresh();
+}
+function updProp(type,idx,key,val) {
+  const arr = type==='own'?propOwn:propPar;
+  arr[idx][key] = key==='name'?val:(parseFloat(val)||0);
+  if (key!=='name') {
+    const tot = type==='own'?sumOwn():sumPar();
+    const el = document.getElementById('tot-'+type);
+    if(el) el.innerHTML=`Total : <strong>${tot.l}€</strong>/mois · <strong>${fmt(tot.v)}</strong>`;
+    refresh();
+  }
+}
+
+// ─── Calcul des projections ───
+function calc() {
+  rows = [];
+  const o=sumOwn(), pa=sumPar();
+  let w=p.wBase, e=p.eBase, io=o.v, ip=0;
+
+  for (let y=Y0; y<=Y1; y++) {
+    const n=y-Y0, age=y-BIRTH;
+    const inf=Math.pow(1+p.infl/100,n), rf=1/inf;
+
+    // Passif exact (formule d'amortissement par bien)
+    const passif = propOwn.reduce((s,prop)=>s+propPassif(prop,y), 0);
+    const herO = y>=p.herYear ? p.herOther : 0;
+    const imN = io - passif;
+    const tot = w+e+imN+ip+herO;
+
+    // Revenus : loyer indexé moins mensualité du prêt (fixe en nominal)
+    const lOwn = propOwn.reduce((s,prop) => {
+      const baseL = prop.loyer * inf;
+      const mens = propMensualite(prop, y); // mensualité effective pour l'année
+      return s + Math.max(0, baseL - mens);
+    }, 0);
+    const lPar = y>=p.herYear ? pa.l*Math.pow(1+p.infl/100,Math.max(0,y-p.herYear)) : 0;
+    const lPen = y>=p.pensionYear ? p.pension*Math.pow(1+p.infl/100,Math.max(0,y-p.pensionYear)) : 0;
+    const lTot = lOwn+lPar+lPen;
+
+    rows.push({year:y,age,
+      w:Math.round(w),e:Math.round(e),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),
+      wR:Math.round(w*rf),eR:Math.round(e*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),
+      lOwn:Math.round(lOwn),lPar:Math.round(lPar),lPen:Math.round(lPen),
+      lOwnR:Math.round(lOwn*rf),lParR:Math.round(lPar*rf),lPenR:Math.round(lPen*rf),
+      lm:Math.round(lTot),lmR:Math.round(lTot*rf),la:Math.round(lTot*12),laR:Math.round(lTot*12*rf),
+    });
+
+    w*=(1+p.wRate/100); if(y===2027) w+=p.v2027;
     e*=(1+p.eRate/100);
     io*=(1+p.iRate/100);
-    if(y===p.herYear)ip=p.herImmo;else if(y>p.herYear)ip*=(1+p.iRate/100);
+    if(y===p.herYear) ip=pa.v; else if(y>p.herYear) ip*=(1+p.iRate/100);
   }
 }
 
 function vk(d,k){return mode==='real'?d[k+'R']:d[k];}
 function find(y){return rows.find(r=>r.year===y);}
-
 const isDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
 
-function updateKPIs(){
-  [[2030,'kpi-2030'],[2034,'kpi-2034'],[2043,'kpi-2043']].forEach(([y,id])=>{
+function updateKPIs() {
+  [[2030,'kpi-2030'],[2034,'kpi-2034'],[2045,'kpi-2045']].forEach(([y,id])=>{
     const d=find(y);
     document.getElementById(id).textContent=fmt(vk(d,'tot'));
-    document.getElementById(id+'-l').textContent='Loyers : '+fmt(vk(d,'lm'))+'/mois';
+    document.getElementById(id+'-l').textContent='Revenus : '+fmt(vk(d,'lm'))+'/mois';
   });
 }
 
-function updateTable(){
-  const tbody=document.getElementById('tbl-body');
-  tbody.innerHTML='';
+function updateTable() {
+  const tbody=document.getElementById('tbl-body'); tbody.innerHTML='';
   MILESTONES.forEach(y=>{
-    const d=find(y);if(!d)return;
+    const d=find(y); if(!d) return;
     const hl=HL.includes(y);
-    const yr=y+(y===2034?' 🎯':y===2043?' 🏁':'');
-    const tr=document.createElement('tr');
-    if(hl)tr.className='hl';
-    tr.innerHTML=`<td style="font-weight:${hl?600:400}">${yr}</td><td style="color:var(--text3)">${d.age}</td><td style="color:#eda100;font-weight:500">${fmt(vk(d,'w'))}</td><td style="color:#1baf7a;font-weight:500">${fmt(vk(d,'e'))}</td><td style="color:#2a78d6;font-weight:500">${fmt(vk(d,'io'))}</td><td style="color:#4a3aa7;font-weight:500">${fmt(vk(d,'ip'))}</td><td style="font-weight:600">${fmt(vk(d,'tot'))}</td><td style="color:var(--text2)">${fmt(vk(d,'lm'))}</td>`;
+    const mark=y===2034?' 🎯':y===2045?' 🏁':y===2033?' ✓':y===2035?' ✓':'';
+    const tr=document.createElement('tr'); if(hl) tr.className='hl';
+    tr.innerHTML=`<td style="font-weight:${hl?600:400}">${y}${mark}</td><td style="color:var(--tx3)">${d.age}</td><td style="color:#eda100;font-weight:500">${fmt(vk(d,'w'))}</td><td style="color:#1baf7a;font-weight:500">${fmt(vk(d,'e'))}</td><td style="color:#2a78d6;font-weight:500">${fmt(vk(d,'io'))}</td><td style="color:#4a3aa7;font-weight:500">${fmt(vk(d,'ip'))}</td><td style="font-weight:600">${fmt(vk(d,'tot'))}</td><td style="color:var(--tx2)">${fmt(vk(d,'lm'))}</td>`;
     tbody.appendChild(tr);
   });
 }
 
-function renderChart(){
+function renderChart() {
   if(chartInst){chartInst.destroy();chartInst=null;}
   const dark=isDark();
   const grid=dark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
-  const tick=dark?'#898781':'#898781';
-  const ttBg=dark?'#2c2c2a':'#ffffff';
-  const ttTxt=dark?'#f0efec':'#0b0b0b';
-  const ttBorder=dark?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.12)';
+  const tick='#898781', ttBg=dark?'#2c2c2a':'#fff', ttTxt=dark?'#f0efec':'#0b0b0b', ttBd=dark?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.12)';
   const yrs=rows.map(r=>String(r.year));
-  const r2034=rows.findIndex(r=>r.year===2034);
-  const r2043=rows.findIndex(r=>r.year===2043);
+  const i2034=rows.findIndex(r=>r.year===2034);
+  const i2045=rows.findIndex(r=>r.year===2045);
+  const i2033=rows.findIndex(r=>r.year===2033);
+  const i2035=rows.findIndex(r=>r.year===2035);
 
-  const refPlugin={id:'refs',afterDraw(chart){
+  const refP={id:'refs',afterDraw(chart){
     const ctx=chart.ctx,xs=chart.scales.x,ys=chart.scales.y;
-    if(!xs||!ys)return;
-    [[r2034,C.e,'Retraite 2034'],[r2043,C.i,'Pension 2043']].forEach(([idx,col,lbl])=>{
-      if(idx<0)return;
+    if(!xs||!ys) return;
+    [[i2034,C.e,'Retraite 2034'],[i2045,C.i,'Pension 2045'],[i2033,'#aaa','NOH libre'],[i2035,'#aaa','Strbk libre']].forEach(([idx,col,lbl])=>{
+      if(idx<0) return;
       const x=xs.getPixelForIndex(idx);
-      ctx.save();ctx.strokeStyle=col+'88';ctx.setLineDash([5,4]);ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(x,ys.top);ctx.lineTo(x,ys.bottom);ctx.stroke();
-      ctx.fillStyle=col;ctx.font='9px system-ui';ctx.textAlign='center';
-      ctx.fillText(lbl,x,ys.top+10);
+      ctx.save(); ctx.strokeStyle=col+(col==='#aaa'?'66':'88'); ctx.setLineDash(col==='#aaa'?[3,4]:[5,4]); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(x,ys.top); ctx.lineTo(x,ys.bottom); ctx.stroke();
+      if(col!=='#aaa'){ctx.fillStyle=col;ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText(lbl,x,ys.top+9);}
       ctx.restore();
     });
   }};
 
-  const baseOpts={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:ttBg,titleColor:ttTxt,bodyColor:ttTxt,borderColor:ttBorder,borderWidth:1,padding:10,callbacks:{title:i=>`${i[0].label} · ${find(parseInt(i[0].label))?.age} ans`,label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}`}}},scales:{x:{grid:{color:grid},ticks:{color:tick,maxTicksLimit:13,font:{size:10}}},y:{grid:{color:grid},ticks:{color:tick,font:{size:10},callback:v=>fmt(v)}}}};
+  const baseOpts={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:ttBg,titleColor:ttTxt,bodyColor:ttTxt,borderColor:ttBd,borderWidth:1,padding:9,
+      callbacks:{title:i=>`${i[0].label} · ${find(parseInt(i[0].label))?.age} ans`,label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}`}}},
+    scales:{x:{grid:{color:grid},ticks:{color:tick,maxTicksLimit:13,font:{size:10}}},y:{grid:{color:grid},ticks:{color:tick,font:{size:10},callback:v=>fmt(v)}}}};
 
   let cfg;
   if(tab==='total'){
-    document.getElementById('chart-legend').innerHTML=`<div class="leg-item"><div class="leg-sq" style="background:#2a78d6"></div>Total patrimoine</div>`;
-    cfg={type:'line',data:{labels:yrs,datasets:[{label:'Total patrimoine',data:rows.map(r=>vk(r,'tot')),borderColor:'#2a78d6',backgroundColor:'#2a78d625',borderWidth:2,pointRadius:0,fill:true,tension:0.35}]},options:baseOpts,plugins:[refPlugin]};
+    document.getElementById('chart-legend').innerHTML=`<div class="li"><div class="lsq" style="background:#2a78d6"></div>Total patrimoine</div>`;
+    cfg={type:'line',data:{labels:yrs,datasets:[{label:'Total patrimoine',data:rows.map(r=>vk(r,'tot')),borderColor:'#2a78d6',backgroundColor:'#2a78d622',borderWidth:2,pointRadius:0,fill:true,tension:0.35}]},options:baseOpts,plugins:[refP]};
   } else if(tab==='breakdown'){
-    document.getElementById('chart-legend').innerHTML=`<div class="leg-item"><div class="leg-sq" style="background:#4a3aa7"></div>Héritage & immo parentaux</div><div class="leg-item"><div class="leg-sq" style="background:#2a78d6"></div>Immobilier propre (net)</div><div class="leg-item"><div class="leg-sq" style="background:#1baf7a"></div>EIP Branche 23</div><div class="leg-item"><div class="leg-sq" style="background:#eda100"></div>Wealins</div>`;
+    document.getElementById('chart-legend').innerHTML=`<div class="li"><div class="lsq" style="background:#4a3aa7"></div>Héritage & immo parentaux</div><div class="li"><div class="lsq" style="background:#2a78d6"></div>Immobilier propre (net)</div><div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP</div><div class="li"><div class="lsq" style="background:#eda100"></div>Wealins</div>`;
     cfg={type:'line',data:{labels:yrs,datasets:[
-      {label:'Héritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-      {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-      {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-      {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'40',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-    ]},options:baseOpts,plugins:[refPlugin]};
+      {label:'Héritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+    ]},options:baseOpts,plugins:[refP]};
   } else {
     const evR=rows.filter((_,i)=>i%2===0);
-    document.getElementById('chart-legend').innerHTML=`<div class="leg-item"><div class="leg-sq" style="background:#eda100"></div>Loyers annuels bruts</div>`;
-    cfg={type:'bar',data:{labels:evR.map(r=>String(r.year)),datasets:[{label:'Loyers annuels bruts',data:evR.map(r=>vk(r,'la')),backgroundColor:C.w+'cc',borderRadius:3,borderSkipped:false}]},options:{...baseOpts,plugins:{...baseOpts.plugins,tooltip:{...baseOpts.plugins.tooltip,callbacks:{title:i=>{const d=find(parseInt(i[0].label));return`${i[0].label} · ${d?.age} ans — ${fmt(vk(d,'lm'))}/mois`;},label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}`}}}}};
+    document.getElementById('chart-legend').innerHTML=`<div class="li"><div class="lsq" style="background:#eda100"></div>Loyers nets propres</div><div class="li"><div class="lsq" style="background:#1baf7a"></div>Loyers parentaux</div><div class="li"><div class="lsq" style="background:#eb6834"></div>Pension légale</div>`;
+    const iOpts={...baseOpts,scales:{x:{...baseOpts.scales.x,stacked:true},y:{...baseOpts.scales.y,stacked:true}},
+      plugins:{...baseOpts.plugins,tooltip:{...baseOpts.plugins.tooltip,callbacks:{
+        title:i=>{const d=find(parseInt(i[0].label));return`${i[0].label} · ${d?.age} ans`;},
+        label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}/mois`,
+        footer:items=>`  Total : ${fmt(items.reduce((s,i)=>s+(i.raw||0),0),false)}/mois`
+      }}}};
+    cfg={type:'bar',data:{labels:evR.map(r=>String(r.year)),datasets:[
+      {label:'Loyers nets propres',data:evR.map(r=>mode==='real'?r.lOwnR:r.lOwn),backgroundColor:C.w+'cc',stack:'inc'},
+      {label:'Loyers parentaux',data:evR.map(r=>mode==='real'?r.lParR:r.lPar),backgroundColor:C.e+'cc',stack:'inc'},
+      {label:'Pension légale',data:evR.map(r=>mode==='real'?r.lPenR:r.lPen),backgroundColor:C.p+'cc',stack:'inc'},
+    ]},options:iOpts};
   }
   chartInst=new Chart(document.getElementById('mainChart'),cfg);
 }
 
 function refresh(){calc();updateKPIs();updateTable();renderChart();}
-
-function setMode(m){
-  mode=m;
-  ['nom','real'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));
-  refresh();
-}
-
-function setTab(t){
-  tab=t;
-  ['total','breakdown','income'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
-  renderChart();updateKPIs();updateTable();
-}
-
-function updateSlider(k,v){
-  p[k]=parseFloat(v);
-  document.getElementById('lbl-'+k).textContent=parseFloat(v).toFixed(1).replace('.0','')+'%';
-  refresh();
-}
-
+function setMode(m){mode=m;['nom','real'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));refresh();}
+function setTab(t){tab=t;['total','breakdown','income'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));renderChart();updateKPIs();updateTable();}
+function updateSlider(k,v){p[k]=parseFloat(v);document.getElementById('lbl-'+k).textContent=parseFloat(v).toFixed(1).replace('.0','')+'%';refresh();}
 function updateField(k,v){p[k]=parseFloat(v)||0;refresh();}
 
-function initControls(){
-  const sliders=['wRate','eRate','infl','iRate'];
-  sliders.forEach(k=>{
+function initControls() {
+  // Sliders
+  ['wRate','eRate','infl','iRate'].forEach(k=>{
     document.getElementById('sl-'+k).value=p[k];
     document.getElementById('lbl-'+k).textContent=p[k]+'%';
   });
-  ['wBase','v2027','eBase','iVal','iPas','loyers','hypoEnd','herYear','herImmo','herOther','herLoyers'].forEach(k=>{
-    const el=document.getElementById('f-'+k);
-    if(el)el.value=p[k];
+  // Champs texte
+  ['wBase','v2027','eBase','herYear','herOther','pension','pensionYear'].forEach(k=>{
+    const el=document.getElementById('f-'+k); if(el) el.value=p[k];
   });
+  // Badge date auto
+  const now=new Date();
+  document.getElementById('date-badge').textContent=`⟳ Soldes au ${MONTHS_FR[now.getMonth()]} ${now.getFullYear()}`;
+  // Rendu des cartes biens
+  renderProps('own');
+  renderProps('par');
 }
 
-initControls();refresh();
+initControls();
+refresh();
 </script>
 </body>
 </html>
