@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vision Patrimoniale · Mehdi</title>
 <style>
-
-:root{--bg:#f9f9f8;--sf:#fff;--sf2:#f5f4f0;--tx:#0b0b0b;--tx2:#52514e;--tx3:#898781;--bd:rgba(11,11,11,0.10);--bd2:rgba(11,11,11,0.18);--acc:#2a78d6;--acc-bg:#e6f1fb;--acc-tx:#185fa5;--ok:#0f6e56;--ok-bg:#e1f5ee;--warn:#9a5c00;--r:8px;}
-@media(prefers-color-scheme:dark){:root{--bg:#111110;--sf:#1a1a19;--sf2:#232322;--tx:#f0efec;--tx2:#c3c2b7;--tx3:#898781;--bd:rgba(255,255,255,0.10);--bd2:rgba(255,255,255,0.18);--acc:#3987e5;--acc-bg:#0c2040;--acc-tx:#85b7eb;--ok:#1d9e75;--ok-bg:#04342c;--warn:#e8a020;}}
+:root{--bg:#f9f9f8;--sf:#fff;--sf2:#f5f4f0;--tx:#0b0b0b;--tx2:#52514e;--tx3:#898781;--bd:rgba(11,11,11,0.10);--bd2:rgba(11,11,11,0.18);--acc:#2a78d6;--acc-bg:#e6f1fb;--acc-tx:#185fa5;--ok:#0f6e56;--ok-bg:#e1f5ee;--r:8px;}
+@media(prefers-color-scheme:dark){:root{--bg:#111110;--sf:#1a1a19;--sf2:#232322;--tx:#f0efec;--tx2:#c3c2b7;--tx3:#898781;--bd:rgba(255,255,255,0.10);--bd2:rgba(255,255,255,0.18);--acc:#3987e5;--acc-bg:#0c2040;--acc-tx:#85b7eb;--ok:#1d9e75;--ok-bg:#04342c;}}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);font-size:13px;min-height:100vh;}
 .app{display:flex;flex-direction:column;min-height:100vh;}
@@ -16,7 +15,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hdr-nm{font-size:17px;font-weight:500;}
 .hdr-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .auto-badge{font-size:10px;background:var(--ok-bg);color:var(--ok);padding:3px 8px;border-radius:20px;font-weight:500;}
-.mode-btns{display:flex;gap:6px;}
 .mbtn{padding:5px 12px;border-radius:var(--r);cursor:pointer;font-size:12px;border:0.5px solid var(--bd2);background:transparent;color:var(--tx2);font-family:inherit;}
 .mbtn.active{border-color:var(--acc);background:var(--acc-bg);color:var(--acc-tx);font-weight:500;}
 .body{display:flex;flex:1;}
@@ -44,7 +42,7 @@ input[type=range]{width:100%;cursor:pointer;}
 .pi-f span{font-size:10px;color:var(--tx3);}
 .pi-f input{width:100%;background:var(--sf);border:0.5px solid var(--bd2);border-radius:4px;color:var(--tx);padding:3px 5px;font-size:11px;font-family:inherit;outline:none;}
 .pi-f input:focus{border-color:var(--acc);}
-.loan-info{margin-top:6px;padding:5px 7px;background:var(--ok-bg);border-radius:5px;font-size:10px;color:var(--ok);line-height:1.6;}
+.loan-info{margin-top:6px;padding:5px 7px;background:var(--ok-bg);border-radius:5px;font-size:10px;color:var(--ok);line-height:1.7;}
 .loan-info strong{font-weight:600;}
 .prop-add{background:none;border:0.5px dashed var(--bd2);border-radius:var(--r);width:100%;padding:4px;font-size:11px;color:var(--tx3);cursor:pointer;margin-top:4px;font-family:inherit;}
 .prop-add:hover{border-color:var(--acc);color:var(--acc);}
@@ -58,7 +56,7 @@ input[type=range]{width:100%;cursor:pointer;}
 .kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;}
 .kpi-card{background:var(--sf);border:0.5px solid var(--bd);border-radius:12px;padding:11px 13px;}
 .kpi-lbl{font-size:11px;color:var(--tx3);margin-bottom:4px;}
-.kpi-val{font-size:21px;font-weight:500;margin-bottom:2px;line-height:1.1;}
+.kpi-val{font-size:20px;font-weight:500;margin-bottom:2px;line-height:1.1;}
 .kpi-sub{font-size:11px;color:var(--tx2);}
 .tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap;}
 .tbtn{padding:5px 13px;border-radius:var(--r);cursor:pointer;font-size:12px;border:0.5px solid var(--bd2);background:transparent;color:var(--tx2);font-family:inherit;}
@@ -76,60 +74,58 @@ th:first-child{text-align:left;}
 td{padding:7px 11px;text-align:right;border-top:0.5px solid var(--bd);}
 td:first-child{text-align:left;}
 tr.hl td{background:var(--acc-bg);}
-tr.hl td:first-child{color:var(--acc-tx);font-weight:500;}
+tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
 @media(max-width:700px){.body{flex-direction:column;}.side{width:100%;max-height:none;position:relative;top:0;border-right:none;border-bottom:0.5px solid var(--bd);}.kpi-grid{grid-template-columns:1fr;}.main{padding:12px;}}
-
 </style>
 </head>
 <body>
 
 <div class="app">
 <div class="hdr">
-  <div><div class="hdr-ey">VISION PATRIMONIALE</div><div class="hdr-nm">Mehdi · 2026–2050</div></div>
+  <div><div class="hdr-ey">VISION PATRIMONIALE</div><div class="hdr-nm">Mehdi &middot; 2026&ndash;2050</div></div>
   <div class="hdr-r">
-    <span class="auto-badge" id="date-badge">⟳ …</span>
-    <div class="mode-btns">
+    <span class="auto-badge" id="date-badge">&#8987; &hellip;</span>
+    <div style="display:flex;gap:6px;">
       <button class="mbtn active" id="btn-nom" onclick="setMode('nom')">Nominal</button>
-      <button class="mbtn" id="btn-real" onclick="setMode('real')">Réel (€ 2026)</button>
+      <button class="mbtn" id="btn-real" onclick="setMode('real')">R&eacute;el (&euro; 2026)</button>
     </div>
   </div>
 </div>
 <div class="body">
 <div class="side">
   <div class="sh">TAUX</div>
-  <div class="sr"><div class="sl-lbl"><span>Wealins</span><span class="sl-v" id="lbl-wRate" style="color:#eda100"></span></div><input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updateSlider('wRate',this.value)" style="accent-color:#eda100"></div>
-  <div class="sr"><div class="sl-lbl"><span>EIP Branche 23</span><span class="sl-v" id="lbl-eRate" style="color:#1baf7a"></span></div><input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updateSlider('eRate',this.value)" style="accent-color:#1baf7a"></div>
-  <div class="sr"><div class="sl-lbl"><span>Inflation</span><span class="sl-v" id="lbl-infl" style="color:var(--tx3)"></span></div><input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updateSlider('infl',this.value)"></div>
-  <div class="sr"><div class="sl-lbl"><span>Appréciation immo</span><span class="sl-v" id="lbl-iRate" style="color:#2a78d6"></span></div><input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updateSlider('iRate',this.value)" style="accent-color:#2a78d6"></div>
-
+  <div class="sr"><div class="sl-lbl"><span>Wealins</span><span class="sl-v" id="lbl-wRate" style="color:#eda100"></span></div><input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updSlider('wRate',this.value)" style="accent-color:#eda100"></div>
+  <div class="sr"><div class="sl-lbl"><span>EIP Branche 23</span><span class="sl-v" id="lbl-eRate" style="color:#1baf7a"></span></div><input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updSlider('eRate',this.value)" style="accent-color:#1baf7a"></div>
+  <div class="sr"><div class="sl-lbl"><span>Inflation</span><span class="sl-v" id="lbl-infl" style="color:var(--tx3)"></span></div><input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updSlider('infl',this.value)"></div>
+  <div class="sr"><div class="sl-lbl"><span>App&eacute;ciation immo</span><span class="sl-v" id="lbl-iRate" style="color:#2a78d6"></span></div><input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updSlider('iRate',this.value)" style="accent-color:#2a78d6"></div>
   <div class="sh">MES BIENS IMMOBILIERS</div>
   <div id="props-own"></div>
-  <div class="sh">BIENS PARENTAUX — MA PART</div>
+  <div class="sh">BIENS PARENTAUX &mdash; MA PART</div>
   <div id="props-par"></div>
   <div class="sh">ACTIFS FINANCIERS</div>
   <div class="fi">
-    <label>Wealins actuel (€) — ou importer :</label>
+    <label>Wealins actuel (&euro;) &mdash; ou importer :</label>
     <div class="pdf-row">
-      <input type="number" id="f-wBase" oninput="updateField('wBase',this.value)" style="flex:1">
-      <button class="pdf-btn" onclick="document.getElementById('pdf-upload').click()">📄 PDF</button>
+      <input type="number" id="f-wBase" oninput="updField('wBase',this.value)" style="flex:1">
+      <button class="pdf-btn" onclick="document.getElementById('pdfup').click()">&#128196; PDF</button>
     </div>
-    <input type="file" id="pdf-upload" accept=".pdf" style="display:none" onchange="handleWealinsPDF(this.files[0])">
+    <input type="file" id="pdfup" accept=".pdf" style="display:none" onchange="importWealins(this.files[0])">
     <div id="pdf-status"></div>
   </div>
-  <div class="fi"><label>Versement août 2027 (€)</label><input type="number" id="f-v2027" oninput="updateField('v2027',this.value)"></div>
-  <div class="fi"><label>EIP actuel (€)</label><input type="number" id="f-eBase" oninput="updateField('eBase',this.value)"></div>
-  <div class="sh">HÉRITAGE</div>
-  <div class="fi"><label>Année héritage</label><input type="number" id="f-herYear" oninput="updateField('herYear',this.value)"></div>
-  <div class="fi"><label>Autres actifs nets (€)</label><input type="number" id="f-herOther" oninput="updateField('herOther',this.value)"></div>
-  <div class="sh">PENSION LÉGALE</div>
-  <div class="fi"><label>Montant mensuel (€)</label><input type="number" id="f-pension" oninput="updateField('pension',this.value)"></div>
-  <div class="fi"><label>À partir de (année)</label><input type="number" id="f-pensionYear" oninput="updateField('pensionYear',this.value)"></div>
+  <div class="fi"><label>Versement ao&ucirc;t 2027 (&euro;)</label><input type="number" id="f-v2027" oninput="updField('v2027',this.value)"></div>
+  <div class="fi"><label>EIP actuel (&euro;)</label><input type="number" id="f-eBase" oninput="updField('eBase',this.value)"></div>
+  <div class="sh">H&Eacute;RITAGE</div>
+  <div class="fi"><label>Ann&eacute;e h&eacute;ritage</label><input type="number" id="f-herYear" oninput="updField('herYear',this.value)"></div>
+  <div class="fi"><label>Actifs financiers nets (&euro;)</label><input type="number" id="f-herOther" oninput="updField('herOther',this.value)"></div>
+  <div class="sh">PENSION L&Eacute;GALE</div>
+  <div class="fi"><label>Montant mensuel (&euro;)</label><input type="number" id="f-pension" oninput="updField('pension',this.value)"></div>
+  <div class="fi"><label>&Agrave; partir de (ann&eacute;e)</label><input type="number" id="f-pensionYear" oninput="updField('pensionYear',this.value)"></div>
 </div>
 <div class="main">
   <div class="kpi-grid">
-    <div class="kpi-card"><div class="kpi-lbl">2030 — 52 ans</div><div class="kpi-val" id="kpi-2030" style="color:var(--tx2)">—</div><div class="kpi-sub" id="kpi-2030-l">—</div></div>
-    <div class="kpi-card" style="border-color:var(--ok)"><div class="kpi-lbl">🎯 Retraite — 56 ans</div><div class="kpi-val" id="kpi-2034" style="color:var(--ok)">—</div><div class="kpi-sub" id="kpi-2034-l">—</div></div>
-    <div class="kpi-card" style="border-color:var(--acc)"><div class="kpi-lbl">🏁 Pension — 67 ans</div><div class="kpi-val" id="kpi-2045" style="color:var(--acc)">—</div><div class="kpi-sub" id="kpi-2045-l">—</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">2030 &mdash; 52 ans</div><div class="kpi-val" id="kpi-2030" style="color:var(--tx2)">—</div><div class="kpi-sub" id="kpi-2030-l">—</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">2034 &mdash; 56 ans</div><div class="kpi-val" id="kpi-2034" style="color:var(--tx2)">—</div><div class="kpi-sub" id="kpi-2034-l">—</div></div>
+    <div class="kpi-card" style="border-color:var(--acc)"><div class="kpi-lbl">&#127937; Pension &mdash; 67 ans</div><div class="kpi-val" id="kpi-2045" style="color:var(--acc)">—</div><div class="kpi-sub" id="kpi-2045-l">—</div></div>
   </div>
   <div class="tabs">
     <button class="tbtn active" id="tab-total" onclick="setTab('total')">Patrimoine total</button>
@@ -141,12 +137,12 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:500;}
     <div style="position:relative;width:100%;height:275px;"><canvas id="mainChart"></canvas></div>
   </div>
   <div class="tbox">
-    <div class="tbox-h">JALONS CLÉS</div>
+    <div class="tbox-h">JALONS CL&Eacute;S</div>
     <div class="tw"><table>
       <thead><tr>
-        <th>Année</th><th>Âge</th>
+        <th>Ann&eacute;e</th><th>&Acirc;ge</th>
         <th style="color:#eda100">Wealins</th><th style="color:#1baf7a">EIP</th>
-        <th style="color:#2a78d6">Immo net</th><th style="color:#4a3aa7">Héritage+</th>
+        <th style="color:#2a78d6">Immo net</th><th style="color:#4a3aa7">H&eacute;ritage+</th>
         <th>Total</th><th>Revenus/mois</th>
       </tr></thead>
       <tbody id="tbl-body"></tbody>
@@ -158,112 +154,134 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:500;}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-
 const BIRTH=1978, Y0=2026, Y1=2050;
 const MILESTONES=[2026,2027,2028,2030,2033,2034,2035,2038,2043,2045,2050];
-const HL=[2034,2045];
+const HL=[2045];
 const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
-const MFR=['janv.','\u0066\u00e9vr.','mars','avr.','mai','juin','juil.','ao\u00fbt','sept.','oct.','nov.','d\u00e9c.'];
+const MFR=['janv.',`févr.`,'mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.',`déc.`];
 
-// ── Tableaux d'amortissement BNP Paribas Fortis ──────────────────────────
-const LD = {
-  // Strombeek Avance 009-7557108-37 · nov.2015 · 115k · 594.49/mois · 240 éch.
-  strombeek: {P:115000, r:213.90/115000, M:594.49, start:[2015,10], n:240},
-  // NOH Avance 009-7828169-80 · nov.2018 · 103k · 644.94/mois · 180 éch.
-  noh1: {P:103000, r:139.05/103000, M:644.94, start:[2018,10], n:180},
-  // NOH Avance 009-7830777-69 · nov.2018 · 12k · 75.14/mois · 180 éch.
-  noh2: {P:12000, r:16.20/12000, M:75.14, start:[2018,10], n:180},
-  // Maison Avance 009-7854298-19 · jan.2024 · 190k · 65% · 1026.63/mois · 240 éch.
-  maison1: {P:190013.94*0.65, r:429.43/190013.94, M:1026.63*0.65, start:[2024,0], n:240},
-  // Maison Avance 009-7854279-97 · jan.2024 · 82.6k · 65% · 446.36/mois · 240 éch.
-  maison2: {P:82614.76*0.65, r:186.71/82614.76, M:446.36*0.65, start:[2024,0], n:240},
+// ── Prêts (tableaux d'amortissement BNPP Fortis) ───────────────────────────
+const LD={
+  strombeek:{P:115000, r:213.90/115000, M:594.49, start:[2015,10], n:240, share:1},
+  noh1:     {P:103000, r:139.05/103000, M:644.94, start:[2018,10], n:180, share:1},
+  noh2:     {P:12000,  r:16.20/12000,   M:75.14,  start:[2018,10], n:180, share:1},
+  // Maison : prêts complets, share=0.65 appliqué dans pPassif/pMens
+  maison1:  {P:190013.94, r:429.43/190013.94, M:1026.63, start:[2024,0], n:240, share:0.65},
+  maison2:  {P:82614.76,  r:186.71/82614.76,  M:446.36,  start:[2024,0], n:240, share:0.65},
 };
 
-// Solde après k mensualités (formule d'amortissement exacte)
-function lbal(def, asOf) {
-  const [sy,sm] = def.start;
-  const k = (asOf.getFullYear()-sy)*12 + (asOf.getMonth()-sm) + 1;
-  if (k<=0) return def.P;
-  if (k>=def.n) return 0;
-  const pow = Math.pow(1+def.r, k);
-  return Math.max(0, def.P*pow - def.M*(pow-1)/def.r);
+// Solde après k mensualités (formule exacte, valeur brute sans share)
+function lbal(def, asOf){
+  const [sy,sm]=def.start;
+  const k=(asOf.getFullYear()-sy)*12+(asOf.getMonth()-sm)+1;
+  if(k<=0) return def.P;
+  if(k>=def.n) return 0;
+  const pw=Math.pow(1+def.r,k);
+  return Math.max(0, def.P*pw - def.M*(pw-1)/def.r);
 }
 
-// Date de fin d'un prêt (mois/année)
-function lend(def) {
-  const tm = def.start[1] + def.n - 1;
-  return MFR[tm%12] + ' ' + (def.start[0]+Math.floor(tm/12));
+// Date de fin lisible
+function lend(def){
+  const tm=def.start[1]+def.n-1;
+  return MFR[tm%12]+' '+(def.start[0]+Math.floor(tm/12));
 }
 
-// Mensualité active pour un prêt en année y (0 si terminé)
-function lmont(def, y) {
-  const [sy,sm] = def.start;
-  const kA = (y-sy)*12 + (1-sm) + 1;
-  const kZ = kA+11;
-  if (kZ<=0 || kA>def.n) return 0;
-  return def.M * Math.min(12, Math.max(0, Math.min(def.n,kZ)-Math.max(0,kA)+1)) / 12;
+// Mensualité effective pour une année (valeur brute, hors share)
+function lmont(def, y){
+  const [sy,sm]=def.start;
+  const kA=(y-sy)*12+(0-sm)+1;   // janvier de l'année y
+  const kZ=kA+11;                   // décembre de l'année y
+  if(kZ<=0||kA>def.n) return 0;
+  const months=Math.min(def.n,kZ)-Math.max(0,kA)+1;
+  return def.M*Math.max(0,Math.min(12,months))/12;
 }
 
-// ── Données ────────────────────────────────────────────────────────────────
-let propOwn = [
-  {name:'Strombeek', loyer:1000, valeur:220000, loans:['strombeek']},
-  {name:'Neder-Over-Heembeek', loyer:875, valeur:160000, loans:['noh1','noh2']},
-  {name:'Maison Grimbergen (65%)', loyer:0, valeur:280000, loans:['maison1','maison2']},
+// ── Données ──────────────────────────────────────────────────────────────
+let propOwn=[
+  {name:'Strombeek',              loyer:1000, valeur:220000, loans:['strombeek'],         share:1},
+  {name:'Neder-Over-Heembeek',    loyer:875,  valeur:160000, loans:['noh1','noh2'],        share:1},
+  {name:'Maison Grimbergen (65%)',loyer:0,    valeur:280000, loans:['maison1','maison2'],  share:0.65},
 ];
-let propPar = [
+let propPar=[
   {name:'Appartement (50%)', loyer:550, valeur:125000},
-  {name:'Studio 1', loyer:635, valeur:100000},
-  {name:'Studio 2', loyer:475, valeur:100000},
+  {name:'Studio 1',          loyer:635, valeur:100000},
+  {name:'Studio 2',          loyer:475, valeur:100000},
+  {name:'Maison parents (50%)', loyer:0, valeur:241000},
 ];
-let p = {
+let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
   infl:2, iRate:3,
-  herYear:2034, herOther:235000,
+  herYear:2034, herOther:96000,
   pension:1500, pensionYear:2045
 };
 let mode='nom', tab='total', chartInst=null, rows=[];
 
 // ── Utilitaires ──────────────────────────────────────────────────────────
-function fmt(v,c=true){
-  if(v===null||v===undefined||isNaN(v))return'\u2014';
-  const a=Math.abs(v);
-  if(c&&a>=1e6)return+(v/1e6).toFixed(2)+'M \u20ac';
-  if(c&&a>=1000)return Math.round(v/1000)+'k \u20ac';
+function fmt(v,c){
+  if(v===null||v===undefined||isNaN(v)) return '—';
+  if(c!==false){
+    const a=Math.abs(v);
+    if(a>=1e6) return `${+(v/1e6).toFixed(2)}M €`;
+    if(a>=1000) return `${Math.round(v/1000)}k €`;
+  }
   return v.toLocaleString('fr-BE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
 function sO(){return{l:propOwn.reduce((s,x)=>s+x.loyer,0),v:propOwn.reduce((s,x)=>s+x.valeur,0)};}
 function sP(){return{l:propPar.reduce((s,x)=>s+x.loyer,0),v:propPar.reduce((s,x)=>s+x.valeur,0)};}
 
-// ── Rendu des cartes ───────────────────────────────────────────────────────
+// ── Passif et mensualité par bien ─────────────────────────────────────────
+function pPassif(prop, y){
+  if(prop.loans&&prop.loans.length){
+    const sh=prop.share||1;
+    const d=new Date(y,0,1);
+    return prop.loans.reduce((s,k)=>LD[k]?s+lbal(LD[k],d)*sh:s, 0);
+  }
+  if(!prop.solde||y>=(prop.hypoEnd||0)) return 0;
+  const tot=Math.max(1,(prop.hypoEnd||y+1)-Y0);
+  return prop.solde*Math.max(0,((prop.hypoEnd||y)-y)/tot);
+}
+function pMens(prop, y){
+  if(prop.loans&&prop.loans.length){
+    const sh=prop.share||1;
+    return prop.loans.reduce((s,k)=>LD[k]?s+lmont(LD[k],y)*sh:s, 0);
+  }
+  return y<(prop.hypoEnd||0)?(prop.mensualite||0):0;
+}
+
+// ── Rendu des cartes biens ────────────────────────────────────────────────
 function renderProps(type){
   const arr=type==='own'?propOwn:propPar;
   const el=document.getElementById('props-'+(type==='own'?'own':'par'));
   const now=new Date();
   let html=arr.map((prop,i)=>{
-    const del=`<button class="pi-del" onclick="delProp('${type}',${i})">\u00d7</button>`;
+    const del=`<button class="pi-del" onclick="delProp('${type}',${i})">&#215;</button>`;
     const nm=`<input class="pi-name" value="${esc(prop.name)}" oninput="updProp('${type}',${i},'name',this.value)">`;
-    const lF=`<div class="pi-f"><span>Loyer/mois (\u20ac)</span><input type="number" value="${prop.loyer}" oninput="updProp('${type}',${i},'loyer',this.value)"></div>`;
-    const vF=`<div class="pi-f"><span>Valeur estim\u00e9e (\u20ac)</span><input type="number" value="${prop.valeur}" oninput="updProp('${type}',${i},'valeur',this.value)"></div>`;
-    let loanHtml='';
+    const lF=`<div class="pi-f"><span>Loyer/mois (€)</span><input type="number" value="${prop.loyer}" oninput="updProp('${type}',${i},'loyer',this.value)"></div>`;
+    const vF=`<div class="pi-f"><span>Valeur estimée (€)</span><input type="number" value="${prop.valeur}" oninput="updProp('${type}',${i},'valeur',this.value)"></div>`;
+    let extra='';
     if(type==='own'&&prop.loans&&prop.loans.length){
-      const solde=Math.round(prop.loans.reduce((s,k)=>LD[k]?s+lbal(LD[k],now):s,0));
-      const mens=prop.loans.reduce((s,k)=>LD[k]?s+LD[k].M:s,0);
+      const sh=prop.share||1;
+      const solde=Math.round(prop.loans.reduce((s,k)=>LD[k]?s+lbal(LD[k],now)*sh:s,0));
+      const mens=Math.round(prop.loans.reduce((s,k)=>LD[k]?s+LD[k].M:s,0));
       const lastD=LD[prop.loans[prop.loans.length-1]];
       const endD=lastD?lend(lastD):'';
-      loanHtml=`<div class="loan-info">\ud83d\udcb3 <strong>${Math.round(mens)}\u20ac</strong>/mois &nbsp;\u00b7&nbsp; Solde ${MFR[now.getMonth()]} ${now.getFullYear()} : <strong>${fmt(solde,false)}</strong> &nbsp;\u00b7&nbsp; Fin <strong>${endD}</strong></div>`;
+      const shLabel=sh<1?` (${Math.round(sh*100)}%)`:'';
+      extra=`<div class="loan-info">&#128179; <strong>${mens}€</strong>/mois${shLabel} &nbsp;·&nbsp; Solde ${MFR[now.getMonth()]} ${now.getFullYear()} : <strong>${fmt(solde,false)}</strong> &nbsp;·&nbsp; Fin <strong>${endD}</strong></div>`;
     } else if(type==='own'){
-      const mF=`<div class="pi-f"><span>Mensualit\u00e9 (\u20ac)</span><input type="number" value="${prop.mensualite||0}" oninput="updProp('${type}',${i},'mensualite',this.value)"></div>`;
+      const mF=`<div class="pi-f"><span>Mensualité (€)</span><input type="number" value="${prop.mensualite||0}" oninput="updProp('${type}',${i},'mensualite',this.value)"></div>`;
       const hF=`<div class="pi-f"><span>Fin emprunt</span><input type="number" value="${prop.hypoEnd||2026}" oninput="updProp('${type}',${i},'hypoEnd',this.value)"></div>`;
-      const sF=`<div class="pi-g1"><div class="pi-f"><span>Solde restant (\u20ac)</span><input type="number" value="${prop.solde||0}" oninput="updProp('${type}',${i},'solde',this.value)"></div></div>`;
-      loanHtml=`<div class="pi-g2">${mF}${hF}</div>${sF}`;
+      const sF=`<div class="pi-g1"><div class="pi-f"><span>Solde restant (€)</span><input type="number" value="${prop.solde||0}" oninput="updProp('${type}',${i},'solde',this.value)"></div></div>`;
+      extra=`<div class="pi-g2">${mF}${hF}</div>${sF}`;
     }
-    return `<div class="prop-item"><div class="pi-r1">${nm}${del}</div><div class="pi-g2">${lF}${vF}</div>${loanHtml}</div>`;
+    return `<div class="prop-item"><div class="pi-r1">${nm}${del}</div><div class="pi-g2">${lF}${vF}</div>${extra}</div>`;
   }).join('');
   const tot=type==='own'?sO():sP();
   html+=`<button class="prop-add" onclick="addProp('${type}')">+ Ajouter un bien</button>`;
-  html+=`<div class="prop-tot" id="tot-${type}">Total : <strong>${tot.l}\u20ac</strong>/mois &nbsp;\u00b7&nbsp; <strong>${fmt(tot.v)}</strong></div>`;
+  html+=`<div class="prop-tot" id="tot-${type}">Total : <strong>${tot.l}€</strong>/mois &nbsp;·&nbsp; <strong>${fmt(tot.v)}</strong></div>`;
   el.innerHTML=html;
 }
 function addProp(t){
@@ -277,35 +295,19 @@ function updProp(t,i,k,v){
   if(k!=='name'){
     const tot=t==='own'?sO():sP();
     const el=document.getElementById('tot-'+t);
-    if(el)el.innerHTML=`Total : <strong>${tot.l}\u20ac</strong>/mois &nbsp;\u00b7&nbsp; <strong>${fmt(tot.v)}</strong>`;
+    if(el)el.innerHTML=`Total : <strong>${tot.l}€</strong>/mois &nbsp;·&nbsp; <strong>${fmt(tot.v)}</strong>`;
     refresh();
   }
-}
-
-// ── Passif et mensualité par bien ─────────────────────────────────────────
-function pPassif(prop,y){
-  if(prop.loans&&prop.loans.length){
-    const d=new Date(y,0,1);
-    return prop.loans.reduce((s,k)=>LD[k]?s+lbal(LD[k],d):s,0);
-  }
-  if(!prop.solde||y>=(prop.hypoEnd||0))return 0;
-  const tot=Math.max(1,(prop.hypoEnd||y+1)-Y0);
-  return prop.solde*Math.max(0,((prop.hypoEnd||y)-y)/tot);
-}
-function pMens(prop,y){
-  if(prop.loans&&prop.loans.length)
-    return prop.loans.reduce((s,k)=>LD[k]?s+lmont(LD[k],y):s,0);
-  return y<(prop.hypoEnd||0)?(prop.mensualite||0):0;
 }
 
 // ── Calcul ────────────────────────────────────────────────────────────────
 function calc(){
   rows=[];
-  const o=sO(),pa=sP();
-  let w=p.wBase,e=p.eBase,io=o.v,ip=0;
+  const o=sO(), pa=sP();
+  let w=p.wBase, e=p.eBase, io=o.v, ip=0;
   for(let y=Y0;y<=Y1;y++){
-    const n=y-Y0,age=y-BIRTH;
-    const inf=Math.pow(1+p.infl/100,n),rf=1/inf;
+    const n=y-Y0, age=y-BIRTH;
+    const inf=Math.pow(1+p.infl/100,n), rf=1/inf;
     const passif=propOwn.reduce((s,prop)=>s+pPassif(prop,y),0);
     const herO=y>=p.herYear?p.herOther:0;
     const imN=io-passif;
@@ -319,81 +321,96 @@ function calc(){
       wR:Math.round(w*rf),eR:Math.round(e*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),
       lOwn:Math.round(lOwn),lPar:Math.round(lPar),lPen:Math.round(lPen),
       lOwnR:Math.round(lOwn*rf),lParR:Math.round(lPar*rf),lPenR:Math.round(lPen*rf),
-      lm:Math.round(lT),lmR:Math.round(lT*rf),la:Math.round(lT*12),laR:Math.round(lT*12*rf),
+      lm:Math.round(lT),lmR:Math.round(lT*rf),
     });
-    w*=(1+p.wRate/100);if(y===2027)w+=p.v2027;
+    w*=(1+p.wRate/100); if(y===2027)w+=p.v2027;
     e*=(1+p.eRate/100);
     io*=(1+p.iRate/100);
-    if(y===p.herYear)ip=pa.v;else if(y>p.herYear)ip*=(1+p.iRate/100);
+    if(y===p.herYear)ip=pa.v; else if(y>p.herYear)ip*=(1+p.iRate/100);
   }
 }
-
 function vk(d,k){return mode==='real'?d[k+'R']:d[k];}
 function find(y){return rows.find(r=>r.year===y);}
 const isDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
 
+// ── KPIs et tableau ────────────────────────────────────────────────────────
 function updateKPIs(){
   [[2030,'kpi-2030'],[2034,'kpi-2034'],[2045,'kpi-2045']].forEach(([y,id])=>{
     const d=find(y);
     document.getElementById(id).textContent=fmt(vk(d,'tot'));
-    document.getElementById(id+'-l').textContent='Revenus : '+fmt(vk(d,'lm'))+'/mois';
+    document.getElementById(id+'-l').textContent='Revenus : '+fmt(vk(d,'lm'),false)+'/mois';
   });
 }
-
 function updateTable(){
-  const tb=document.getElementById('tbl-body');tb.innerHTML='';
+  const tb=document.getElementById('tbl-body'); tb.innerHTML='';
   MILESTONES.forEach(y=>{
-    const d=find(y);if(!d)return;
+    const d=find(y); if(!d) return;
     const hl=HL.includes(y);
-    const mk=y===2034?' \ud83c\udfaf':y===2045?' \ud83c\udfc1':y===2033||y===2035||y===2043?' \u2713':'';
-    const tr=document.createElement('tr');if(hl)tr.className='hl';
-    tr.innerHTML=`<td style="font-weight:${hl?600:400}">${y}${mk}</td><td style="color:var(--tx3)">${d.age}</td><td style="color:#eda100;font-weight:500">${fmt(vk(d,'w'))}</td><td style="color:#1baf7a;font-weight:500">${fmt(vk(d,'e'))}</td><td style="color:#2a78d6;font-weight:500">${fmt(vk(d,'io'))}</td><td style="color:#4a3aa7;font-weight:500">${fmt(vk(d,'ip'))}</td><td style="font-weight:600">${fmt(vk(d,'tot'))}</td><td style="color:var(--tx2)">${fmt(vk(d,'lm'))}</td>`;
+    const mk=y===2045?' &#127937;':y===2033||y===2035||y===2043?' ✓':'';
+    const tr=document.createElement('tr'); if(hl)tr.className='hl';
+    tr.innerHTML=`<td style="font-weight:${hl?600:400}">${y}${mk}</td>`
+      +`<td style="color:var(--tx3)">${d.age}</td>`
+      +`<td style="color:#eda100">${fmt(vk(d,'w'),false)}</td>`
+      +`<td style="color:#1baf7a">${fmt(vk(d,'e'),false)}</td>`
+      +`<td style="color:#2a78d6">${fmt(vk(d,'io'),false)}</td>`
+      +`<td style="color:#4a3aa7">${fmt(vk(d,'ip'),false)}</td>`
+      +`<td style="font-weight:600">${fmt(vk(d,'tot'),false)}</td>`
+      +`<td style="color:var(--tx2)">${fmt(vk(d,'lm'),false)}</td>`;
     tb.appendChild(tr);
   });
 }
 
 // ── Graphiques ─────────────────────────────────────────────────────────────
 function renderChart(){
-  if(typeof Chart==='undefined'){return;}
-  try{if(chartInst){chartInst.destroy();chartInst=null;}}catch(e){}
+  if(typeof Chart==='undefined'){
+    document.getElementById('chart-legend').textContent='Chargement de Chart.js…';
+    return;
+  }
+  try{ if(chartInst){chartInst.destroy();chartInst=null;} }catch(e){}
   const dark=isDark();
   const grid=dark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
-  const tick='#898781';
-  const ttBg=dark?'#2c2c2a':'#fff';
-  const ttTx=dark?'#f0efec':'#0b0b0b';
-  const ttBd=dark?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.12)';
+  const tick='#898781', ttBg=dark?'#2c2c2a':'#fff', ttTx=dark?'#f0efec':'#0b0b0b';
+  const ttBd=dark?'rgba(255,255,255,0.12)':'rgba(0,0,0,0.1)';
   const yrs=rows.map(r=>String(r.year));
-  const refs=[[2034,C.e,'Retraite'],[2045,C.i,'Pension'],[2033,'#bbb','NOH'],[2035,'#bbb','Strbk'],[2043,'#bbb','Maison']];
 
-  const refP={id:'refs',afterDraw(chart){
-    const ctx=chart.ctx,xs=chart.scales.x,ys=chart.scales.y;
-    if(!xs||!ys)return;
-    refs.forEach(([yr,col,lbl])=>{
+  // Lignes de référence verticales
+  const refDefs=[
+    [2045,C.e,'Pension'],
+    [2033,'#bbb','NOH libre'],
+    [2035,'#bbb','Strbk libre'],
+    [2043,'#bbb','Maison libre'],
+  ];
+  const refPlugin={id:'refs',afterDraw(chart){
+    const ctx=chart.ctx, xs=chart.scales.x, ys=chart.scales.y;
+    if(!xs||!ys) return;
+    refDefs.forEach(([yr,col,lbl])=>{
       const idx=rows.findIndex(r=>r.year===yr);
-      if(idx<0)return;
+      if(idx<0) return;
       const x=xs.getPixelForIndex(idx);
       ctx.save();
       ctx.strokeStyle=col+(col==='#bbb'?'77':'88');
       ctx.setLineDash(col==='#bbb'?[3,4]:[5,4]);
       ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(x,ys.top);ctx.lineTo(x,ys.bottom);ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x,ys.top); ctx.lineTo(x,ys.bottom); ctx.stroke();
       if(col!=='#bbb'){
-        ctx.fillStyle=col;ctx.font='9px system-ui';
-        ctx.textAlign='center';ctx.fillText(lbl,x,ys.top+9);
+        ctx.fillStyle=col; ctx.font='9px system-ui';
+        ctx.textAlign='center'; ctx.fillText(lbl,x,ys.top+9);
       }
       ctx.restore();
     });
   }};
 
-  const bOpts={
-    responsive:true,maintainAspectRatio:false,
+  const baseOpts={
+    responsive:true, maintainAspectRatio:false,
     interaction:{mode:'index',intersect:false},
     plugins:{
       legend:{display:false},
-      tooltip:{backgroundColor:ttBg,titleColor:ttTx,bodyColor:ttTx,borderColor:ttBd,borderWidth:1,padding:9,
+      tooltip:{
+        backgroundColor:ttBg,titleColor:ttTx,bodyColor:ttTx,
+        borderColor:ttBd,borderWidth:1,padding:9,
         callbacks:{
-          title:i=>`${i[0].label} \u00b7 ${find(parseInt(i[0].label))?.age} ans`,
-          label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}`
+          title:items=>`${items[0].label} · ${find(parseInt(items[0].label))?.age} ans`,
+          label:item=>`  ${item.dataset.label} : ${fmt(item.raw,false)}`
         }
       }
     },
@@ -404,45 +421,81 @@ function renderChart(){
   };
 
   let cfg;
+  const leg=document.getElementById('chart-legend');
+
   if(tab==='total'){
-    document.getElementById('chart-legend').innerHTML='<div class="li"><div class="lsq" style="background:#2a78d6"></div>Total patrimoine</div>';
-    cfg={type:'line',data:{labels:yrs,datasets:[{
-      label:'Total patrimoine',data:rows.map(r=>vk(r,'tot')),
-      borderColor:'#2a78d6',backgroundColor:'#2a78d622',
-      borderWidth:2,pointRadius:0,fill:true,tension:0.35
-    }]},options:bOpts,plugins:[refP]};
+    leg.innerHTML='<div class="li"><div class="lsq" style="background:#2a78d6"></div>Total patrimoine</div>';
+    cfg={
+      type:'line',
+      data:{labels:yrs,datasets:[{
+        label:'Total patrimoine',
+        data:rows.map(r=>vk(r,'tot')),
+        borderColor:'#2a78d6',backgroundColor:'#2a78d622',
+        borderWidth:2,pointRadius:0,fill:true,tension:0.35
+      }]},
+      options:baseOpts,
+      plugins:[refPlugin]
+    };
+
   } else if(tab==='breakdown'){
-    document.getElementById('chart-legend').innerHTML='<div class="li"><div class="lsq" style="background:#4a3aa7"></div>H\u00e9ritage & immo parentaux</div><div class="li"><div class="lsq" style="background:#2a78d6"></div>Immobilier propre (net)</div><div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP</div><div class="li"><div class="lsq" style="background:#eda100"></div>Wealins</div>';
-    cfg={type:'line',data:{labels:yrs,datasets:[
-      {label:'H\u00e9ritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-      {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-      {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-      {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-    ]},options:bOpts,plugins:[refP]};
+    leg.innerHTML='<div class="li"><div class="lsq" style="background:#4a3aa7"></div>Héritage &amp; immo parentaux</div>'
+      +'<div class="li"><div class="lsq" style="background:#2a78d6"></div>Immobilier propre (net)</div>'
+      +'<div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP</div>'
+      +'<div class="li"><div class="lsq" style="background:#eda100"></div>Wealins</div>';
+    cfg={
+      type:'line',
+      data:{labels:yrs,datasets:[
+        {label:'Héritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+      ]},
+      options:baseOpts,
+      plugins:[refPlugin]
+    };
+
   } else {
     const evR=rows.filter((_,i)=>i%2===0);
-    document.getElementById('chart-legend').innerHTML='<div class="li"><div class="lsq" style="background:#eda100"></div>Loyers nets propres</div><div class="li"><div class="lsq" style="background:#1baf7a"></div>Loyers parentaux</div><div class="li"><div class="lsq" style="background:#eb6834"></div>Pension l\u00e9gale</div>';
-    const iOpts={...bOpts,
-      scales:{x:{...bOpts.scales.x,stacked:true},y:{...bOpts.scales.y,stacked:true}},
-      plugins:{...bOpts.plugins,tooltip:{...bOpts.plugins.tooltip,callbacks:{
-        title:i=>{const d=find(parseInt(i[0].label));return`${i[0].label} \u00b7 ${d?.age} ans`;},
-        label:i=>`  ${i.dataset.label} : ${fmt(i.raw,false)}/mois`,
-        footer:items=>`  Total : ${fmt(items.reduce((s,i)=>s+(i.raw||0),0),false)}/mois`
-      }}}
+    leg.innerHTML='<div class="li"><div class="lsq" style="background:#eda100"></div>Loyers nets propres</div>'
+      +'<div class="li"><div class="lsq" style="background:#1baf7a"></div>Loyers parentaux</div>'
+      +'<div class="li"><div class="lsq" style="background:#eb6834"></div>Pension légale</div>';
+    const iOpts={
+      ...baseOpts,
+      scales:{
+        x:{...baseOpts.scales.x,stacked:true},
+        y:{...baseOpts.scales.y,stacked:true}
+      },
+      plugins:{
+        ...baseOpts.plugins,
+        tooltip:{
+          ...baseOpts.plugins.tooltip,
+          callbacks:{
+            title:items=>{const d=find(parseInt(items[0].label));return`${items[0].label} · ${d?.age} ans`;},
+            label:item=>`  ${item.dataset.label} : ${fmt(item.raw,false)}/mois`,
+            footer:items=>`  Total : ${fmt(items.reduce((s,i)=>s+(i.raw||0),0),false)}/mois`
+          }
+        }
+      }
     };
-    cfg={type:'bar',data:{labels:evR.map(r=>String(r.year)),datasets:[
-      {label:'Loyers nets propres',data:evR.map(r=>mode==='real'?r.lOwnR:r.lOwn),backgroundColor:C.w+'cc',stack:'inc'},
-      {label:'Loyers parentaux',data:evR.map(r=>mode==='real'?r.lParR:r.lPar),backgroundColor:C.e+'cc',stack:'inc'},
-      {label:'Pension l\u00e9gale',data:evR.map(r=>mode==='real'?r.lPenR:r.lPen),backgroundColor:C.p+'cc',stack:'inc'},
-    ]},options:iOpts};
+    cfg={
+      type:'bar',
+      data:{labels:evR.map(r=>String(r.year)),datasets:[
+        {label:'Loyers nets propres',data:evR.map(r=>mode==='real'?r.lOwnR:r.lOwn),backgroundColor:C.w+'cc',stack:'inc'},
+        {label:'Loyers parentaux',data:evR.map(r=>mode==='real'?r.lParR:r.lPar),backgroundColor:C.e+'cc',stack:'inc'},
+        {label:'Pension légale',data:evR.map(r=>mode==='real'?r.lPenR:r.lPen),backgroundColor:C.p+'cc',stack:'inc'},
+      ]},
+      options:iOpts
+    };
   }
+
   try{
-    const canvas=document.getElementById('mainChart');
-    chartInst=new Chart(canvas,cfg);
-  }catch(e){console.error('Chart error:',e);}
+    chartInst=new Chart(document.getElementById('mainChart'), cfg);
+  }catch(err){
+    document.getElementById('chart-legend').textContent='Erreur graphique : '+err.message;
+  }
 }
 
-// ── PDF Wealins ────────────────────────────────────────────────────────────
+// ── Import PDF Wealins ─────────────────────────────────────────────────────
 function loadPdfJs(){
   return new Promise((res,rej)=>{
     if(window.pdfjsLib){res(window.pdfjsLib);return;}
@@ -458,10 +511,10 @@ function loadPdfJs(){
   });
 }
 
-async function handleWealinsPDF(file){
-  if(!file)return;
+async function importWealins(file){
+  if(!file) return;
   const st=document.getElementById('pdf-status');
-  st.className='';st.textContent='\u29d7 Lecture\u2026';
+  st.className=''; st.textContent='⧗ Lecture…';
   try{
     const pdfjs=await loadPdfJs();
     const buf=await file.arrayBuffer();
@@ -472,41 +525,66 @@ async function handleWealinsPDF(file){
       const ct=await pg.getTextContent();
       text+=ct.items.map(x=>x.str).join(' ')+' ';
     }
-    // Cherche "VALEUR CONTRAT" puis le premier montant en format belge (93.398,00)
+    // Recherche "VALEUR CONTRAT" puis premier montant belge (ex: 93.398,00)
     const up=text.toUpperCase();
     const idx=up.indexOf('VALEUR CONTRAT');
     let found=null;
     if(idx>=0){
-      const slice=text.substring(idx,idx+300);
-      // Nombre belge : chiffres avec points (milliers) et virgule (décimale)
-      const m=slice.match(/([0-9][0-9.]*,[0-9]{2})\s*EUR/i);
-      if(m)found=m[1];
-    }
-    if(!found){
-      // Fallback : premier grand nombre en format belge
-      const m=text.match(/([0-9]{2,3}(?:\.[0-9]{3})+,[0-9]{2})\s*EUR/i);
-      if(m)found=m[1];
+      const slice=text.substring(idx, idx+300);
+      // Extraction sans regex : parcours caractère par caractère
+      let j=0;
+      while(j<slice.length&&!found){
+        const c=slice[j];
+        if(c>='0'&&c<='9'){
+          let num='';
+          while(j<slice.length){
+            const ch=slice[j];
+            if((ch>='0'&&ch<='9')||ch==='.'||ch===','){num+=ch;j++;}
+            else break;
+          }
+          if(num.includes(',')&&num.length>5) found=num;
+        } else {j++;}
+      }
     }
     if(found){
-      const val=parseFloat(found.replace(/\./g,'').replace(',','.'));
+      // Format belge : 93.398,00 -> 93398.00
+      const val=parseFloat(found.split('.').join('').replace(',','.'));
       if(!isNaN(val)&&val>5000){
         p.wBase=val;
         document.getElementById('f-wBase').value=Math.round(val);
         refresh();
         st.className='pdf-ok';
-        st.textContent='\u2713 Import\u00e9 : '+fmt(val,false);
-      }else{st.className='pdf-err';st.textContent='\u2717 Valeur hors plage : '+found;}
-    }else{st.className='pdf-err';st.textContent='\u2717 "Valeur contrat" non trouv\u00e9e';}
-  }catch(err){st.className='pdf-err';st.textContent='\u2717 '+err.message;}
-  document.getElementById('pdf-upload').value='';
+        st.textContent='✓ Importé : '+fmt(val,false);
+      } else {
+        st.className='pdf-err'; st.textContent='✗ Valeur hors plage : '+found;
+      }
+    } else {
+      st.className='pdf-err'; st.textContent='✗ "Valeur contrat" non trouvée';
+    }
+  }catch(err){
+    st.className='pdf-err'; st.textContent='✗ '+err.message;
+  }
+  document.getElementById('pdfup').value='';
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────
 function refresh(){calc();updateKPIs();updateTable();renderChart();}
-function setMode(m){mode=m;['nom','real'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));refresh();}
-function setTab(t){tab=t;['total','breakdown','income'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));renderChart();updateKPIs();updateTable();}
-function updateSlider(k,v){p[k]=parseFloat(v);document.getElementById('lbl-'+k).textContent=parseFloat(v).toFixed(1).replace('.0','')+'%';refresh();}
-function updateField(k,v){p[k]=parseFloat(v)||0;refresh();}
+function setMode(m){
+  mode=m;
+  ['nom','real'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));
+  refresh();
+}
+function setTab(t){
+  tab=t;
+  ['total','breakdown','income'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
+  renderChart();updateKPIs();updateTable();
+}
+function updSlider(k,v){
+  p[k]=parseFloat(v);
+  document.getElementById('lbl-'+k).textContent=parseFloat(v).toFixed(1).replace('.0','')+'%';
+  refresh();
+}
+function updField(k,v){p[k]=parseFloat(v)||0;refresh();}
 
 function initControls(){
   ['wRate','eRate','infl','iRate'].forEach(k=>{
@@ -514,16 +592,20 @@ function initControls(){
     document.getElementById('lbl-'+k).textContent=p[k]+'%';
   });
   ['wBase','v2027','eBase','herYear','herOther','pension','pensionYear'].forEach(k=>{
-    const el=document.getElementById('f-'+k);if(el)el.value=p[k];
+    const el=document.getElementById('f-'+k); if(el) el.value=p[k];
   });
   const now=new Date();
-  document.getElementById('date-badge').textContent='\u29d7 Soldes au '+MFR[now.getMonth()]+' '+now.getFullYear();
+  document.getElementById('date-badge').textContent=
+    '⧗ Soldes au '+MFR[now.getMonth()]+' '+now.getFullYear();
   renderProps('own');
   renderProps('par');
 }
-initControls();
-refresh();
 
+// Démarrage après chargement de Chart.js
+document.addEventListener('DOMContentLoaded', function(){
+  initControls();
+  refresh();
+});
 </script>
 </body>
 </html>
