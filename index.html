@@ -125,6 +125,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   </div>
   <div class="fi"><label>Versement ao&ucirc;t 2027 (&euro;)</label><input type="number" id="f-v2027" oninput="updField('v2027',this.value)"></div>
   <div class="fi"><label>EIP actuel (&euro;)</label><input type="number" id="f-eBase" oninput="updField('eBase',this.value)"></div>
+  <div class="fi"><label>Taxe de sortie EIP à 67 ans (%)</label><input type="number" id="f-eipTax" oninput="updField('eipTax',this.value)"></div>
   
   <div class="sh">EPARGNE RETRAITE (PLCI)</div>
   <div class="fi"><label>Réserve estimée 2026 (&euro;)</label><input type="number" id="f-plciBase" oninput="updField('plciBase',this.value)"></div>
@@ -161,7 +162,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
     <div class="tw"><table>
       <thead><tr>
         <th>Ann&eacute;e</th><th>&Acirc;ge</th>
-        <th style="color:#eda100">Wealins (+ Vente maison par.)</th>
+        <th style="color:#eda100">Wealins (+ Vente maison & EIP)</th>
         <th style="color:#1baf7a">EIP</th>
         <th style="color:#e53987">PLCI</th>
         <th style="color:#2a78d6">Immo net propre</th>
@@ -238,7 +239,7 @@ let propPar=[
 
 let p={
   wBase:93398, wRate:7, v2027:20000,
-  eBase:89000, eRate:5,
+  eBase:89000, eRate:5, eipTax:15,
   plciBase:18200, pRate:2.5, plciYearly:3893,
   infl:2, iRate:3,
   herYear:2034, 
@@ -343,19 +344,26 @@ function calc(){
     const inf=Math.pow(1+p.infl/100,n), rf=1/inf;
     const passif=propOwn.reduce((s,prop)=>s+pPassif(prop,y),0);
     
-    // Transfert de la revente maison + trésorerie nette dans votre Wealins à l'année d'héritage
+    // Transfert de l'héritage parental dans Wealins
     if(y === p.herYear){
       w += herNetFinancier;
-      ip = pa.v * Math.pow(1 + p.iRate/100, n); // Réception des biens locatifs
+      ip = pa.v * Math.pow(1 + p.iRate/100, n);
     } else if (y > p.herYear) {
       ip *= (1 + p.iRate/100);
+    }
+
+    // Transfert de l'EIP net vers Wealins à 67 ans (pensionYear)
+    if(y === p.pensionYear){
+      const eipNet = e * (1 - p.eipTax/100);
+      w += eipNet;
+      e = 0;
     }
 
     const imN = io - passif;
     const tot = w + e + plci + imN + ip;
     
     const lOwn = propOwn.reduce((s,prop)=>s+Math.max(0,prop.loyer*inf-pMens(prop,y)),0);
-    const lPar = (y >= p.herYear) ? pa.l * inf : 0; // Réception continue des 1 660€/mois
+    const lPar = (y >= p.herYear) ? pa.l * inf : 0;
     const lPen = (y >= p.pensionYear) ? p.pension * inf : 0;
     
     const lT = lOwn + lPar + lPen;
@@ -368,7 +376,9 @@ function calc(){
     });
 
     w *= (1 + p.wRate/100); if(y===2027) w += p.v2027;
-    e *= (1 + p.eRate/100);
+    if(y < p.pensionYear) {
+      e *= (1 + p.eRate/100);
+    }
 
     const plciContrib = (y < 2035) ? p.plciYearly : 0;
     plci = (plci + plciContrib) * (1 + p.pRate/100);
@@ -499,7 +509,7 @@ function renderChart(){
       +'<div class="li"><div class="lsq" style="background:#2a78d6"></div>Immobilier propre (net)</div>'
       +'<div class="li"><div class="lsq" style="background:#e53987"></div>PLCI Branche 21</div>'
       +'<div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP Branche 23</div>'
-      +'<div class="li"><div class="lsq" style="background:#eda100"></div>Wealins (+ Vente maison)</div>';
+      +'<div class="li"><div class="lsq" style="background:#eda100"></div>Wealins (+ Vente maison & EIP)</div>';
     cfg={
       type:'line',
       data:{labels:yrs,datasets:[
@@ -507,7 +517,7 @@ function renderChart(){
         {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'PLCI Branche 21',data:rows.map(r=>vk(r,'plci')),borderColor:C.plci,backgroundColor:C.plci+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-        {label:'Wealins (+ Vente maison)',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'Wealins (+ Vente maison & EIP)',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
       ]},
       options:baseOpts,
       plugins:[refPlugin]
@@ -650,7 +660,7 @@ function initControls(){
     document.getElementById('sl-'+k).value=p[k];
     document.getElementById('lbl-'+k).textContent=p[k]+'%';
   });
-  ['wBase','v2027','eBase','plciBase','plciYearly','herYear','parWBase','parCash','parMaisonVal','pension','pensionYear'].forEach(k=>{
+  ['wBase','v2027','eBase','eipTax','plciBase','plciYearly','herYear','parWBase','parCash','parMaisonVal','pension','pensionYear'].forEach(k=>{
     const el=document.getElementById('f-'+k); if(el) el.value=p[k];
   });
   const now=new Date();
