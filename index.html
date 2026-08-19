@@ -100,12 +100,13 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
 </div>
 <div class="body">
 <div class="side">
-  <div class="sh">TAUX</div>
+  <div class="sh">TAUX & RENDEMENTS</div>
   <div class="sr"><div class="sl-lbl"><span>Wealins</span><span class="sl-v" id="lbl-wRate" style="color:#eda100"></span></div><input type="range" min="1" max="15" step="0.5" id="sl-wRate" oninput="updSlider('wRate',this.value)" style="accent-color:#eda100"></div>
   <div class="sr"><div class="sl-lbl"><span>EIP Branche 23</span><span class="sl-v" id="lbl-eRate" style="color:#1baf7a"></span></div><input type="range" min="1" max="12" step="0.5" id="sl-eRate" oninput="updSlider('eRate',this.value)" style="accent-color:#1baf7a"></div>
+  <div class="sr"><div class="sl-lbl"><span>PLCI Branche 21</span><span class="sl-v" id="lbl-pRate" style="color:#e53987"></span></div><input type="range" min="0.5" max="8" step="0.5" id="sl-pRate" oninput="updSlider('pRate',this.value)" style="accent-color:#e53987"></div>
   <div class="sr"><div class="sl-lbl"><span>Wealins par. (Lux)</span><span class="sl-v" id="lbl-parWRate" style="color:#4a3aa7"></span></div><input type="range" min="0" max="12" step="0.5" id="sl-parWRate" oninput="updSlider('parWRate',this.value)" style="accent-color:#4a3aa7"></div>
   <div class="sr"><div class="sl-lbl"><span>Inflation</span><span class="sl-v" id="lbl-infl" style="color:var(--tx3)"></span></div><input type="range" min="0" max="6" step="0.1" id="sl-infl" oninput="updSlider('infl',this.value)"></div>
-  <div class="sr"><div class="sl-lbl"><span>App&eacute;ciation immo</span><span class="sl-v" id="lbl-iRate" style="color:#2a78d6"></span></div><input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updSlider('iRate',this.value)" style="accent-color:#2a78d6"></div>
+  <div class="sr"><div class="sl-lbl"><span>Appr&eacute;ciation immo</span><span class="sl-v" id="lbl-iRate" style="color:#2a78d6"></span></div><input type="range" min="0" max="8" step="0.5" id="sl-iRate" oninput="updSlider('iRate',this.value)" style="accent-color:#2a78d6"></div>
   
   <div class="sh">MES BIENS IMMOBILIERS</div>
   <div id="props-own"></div>
@@ -116,7 +117,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   <div class="fi">
     <label>Wealins actuel (&euro;) &mdash; ou importer :</label>
     <div class="pdf-row">
-      <input type="number" id="f-wBase" oninput="updField('wBase',this.value)" style="flex:1">
+      <input type="number" id="f-wBase" oninput="updField('f-wBase',this.value)" style="flex:1">
       <button class="pdf-btn" onclick="document.getElementById('pdfup').click()">&#128196; PDF</button>
     </div>
     <input type="file" id="pdfup" accept=".pdf" style="display:none" onchange="importWealins(this.files[0])">
@@ -125,6 +126,10 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   <div class="fi"><label>Versement ao&ucirc;t 2027 (&euro;)</label><input type="number" id="f-v2027" oninput="updField('v2027',this.value)"></div>
   <div class="fi"><label>EIP actuel (&euro;)</label><input type="number" id="f-eBase" oninput="updField('eBase',this.value)"></div>
   
+  <div class="sh">EPARGNE RETRAITE (PLCI)</div>
+  <div class="fi"><label>Réserve estimée 2026 (&euro;)</label><input type="number" id="f-plciBase" oninput="updField('plciBase',this.value)"></div>
+  <div class="fi"><label>Cotisation annuelle épargne (&euro;)</label><input type="number" id="f-plciYearly" oninput="updField('plciYearly',this.value)"></div>
+
   <div class="sh">H&Eacute;RITAGE PARENTAL</div>
   <div class="fi"><label>Ann&eacute;e h&eacute;ritage</label><input type="number" id="f-herYear" oninput="updField('herYear',this.value)"></div>
   <div class="fi"><label>Wealins Luxembourg 2026 (&euro;)</label><input type="number" id="f-parWBase" oninput="updField('parWBase',this.value)"></div>
@@ -156,6 +161,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
       <thead><tr>
         <th>Ann&eacute;e</th><th>&Acirc;ge</th>
         <th style="color:#eda100">Wealins</th><th style="color:#1baf7a">EIP</th>
+        <th style="color:#e53987">PLCI</th>
         <th style="color:#2a78d6">Immo net</th><th style="color:#4a3aa7">H&eacute;ritage+</th>
         <th>Total</th><th>Revenus/mois</th>
       </tr></thead>
@@ -170,13 +176,12 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
 <script>
 const BIRTH=1978, Y0=2026, Y1=2050;
 
-// Génération dynamique de TOUTES les années de 2026 à 2050
 const MILESTONES = Array.from({length: Y1 - Y0 + 1}, (_, i) => Y0 + i);
 
-const C={w:'#eda100',e:'#1baf7a',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
+const C={w:'#eda100',e:'#1baf7a',plci:'#e53987',i:'#2a78d6',h:'#4a3aa7',p:'#eb6834'};
 const MFR=['janv.',`févr.`,'mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.',`déc.`];
 
-// ── Prêts (BNPP Fortis) ────────────────────────────────────────────────────
+// Prêts (BNPP Fortis)
 const LD={
   strombeek:{P:115000, r:213.90/115000, M:594.49, start:[2015,10], n:240, share:1},
   noh1:     {P:103000, r:139.05/103000, M:644.94, start:[2018,10], n:180, share:1},
@@ -216,9 +221,8 @@ function getLoanEndYears(){
   return Array.from(years);
 }
 
-// ── Données ──────────────────────────────────────────────────────────────
 let propOwn=[
-  {name:'Strombeek-Bever',              loyer:1000, valeur:220000, loans:['strombeek'],         share:1},
+  {name:'Strombeek-Bever',             loyer:1000, valeur:220000, loans:['strombeek'],        share:1},
   {name:'Neder-Over-Heembeek',    loyer:875,  valeur:160000, loans:['noh1','noh2'],        share:1},
   {name:'Maison Grimbergen (65%)',loyer:0,    valeur:280000, loans:['maison1','maison2'],  share:0.65},
 ];
@@ -231,6 +235,7 @@ let propPar=[
 let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
+  plciBase:18200, plciRate:2, plciYearly:3893, // Capitalisation PLCI Branche 21 AG Insurance
   infl:2, iRate:3,
   herYear:2034, 
   parWBase:110000, parWRate:5, parCash:40000,
@@ -238,7 +243,6 @@ let p={
 };
 let mode='real', tab='total', chartInst=null, rows=[];
 
-// ── Utilitaires ──────────────────────────────────────────────────────────
 function fmt(v,c){
   if(v===null||v===undefined||isNaN(v)) return '—';
   if(c!==false){
@@ -254,7 +258,6 @@ function esc(s){
 function sO(){return{l:propOwn.reduce((s,x)=>s+x.loyer,0),v:propOwn.reduce((s,x)=>s+x.valeur,0)};}
 function sP(){return{l:propPar.reduce((s,x)=>s+x.loyer,0),v:propPar.reduce((s,x)=>s+x.valeur,0)};}
 
-// ── Passif et mensualité ──────────────────────────────────────────────────
 function pPassif(prop, y){
   if(prop.loans&&prop.loans.length){
     const sh=prop.share||1;
@@ -273,7 +276,6 @@ function pMens(prop, y){
   return y<(prop.hypoEnd||0)?(prop.mensualite||0):0;
 }
 
-// ── Rendu des cartes biens ────────────────────────────────────────────────
 function renderProps(type){
   const arr=type==='own'?propOwn:propPar;
   const el=document.getElementById('props-'+(type==='own'?'own':'par'));
@@ -321,11 +323,10 @@ function updProp(t,i,k,v){
   }
 }
 
-// ── Calcul ────────────────────────────────────────────────────────────────
 function calc(){
   rows=[];
   const o=sO(), pa=sP();
-  let w=p.wBase, e=p.eBase, io=o.v, ip=0;
+  let w=p.wBase, e=p.eBase, plci=p.plciBase, io=o.v, ip=0;
   
   const nHer = Math.max(0, p.herYear - Y0);
   const parWProjete = p.parWBase * Math.pow(1 + p.parWRate/100, nHer);
@@ -339,7 +340,7 @@ function calc(){
     const passif=propOwn.reduce((s,prop)=>s+pPassif(prop,y),0);
     const herO=y>=p.herYear?herOtherNet:0;
     const imN=io-passif;
-    const tot=w+e+imN+ip+herO;
+    const tot=w+e+plci+imN+ip+herO;
     
     const lOwn=propOwn.reduce((s,prop)=>s+Math.max(0,prop.loyer*inf-pMens(prop,y)),0);
     const lPar=y>=p.herYear ? pa.l * inf : 0;
@@ -347,14 +348,15 @@ function calc(){
     
     const lT=lOwn+lPar+lPen;
     rows.push({year:y,age,
-      w:Math.round(w),e:Math.round(e),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),
-      wR:Math.round(w*rf),eR:Math.round(e*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),
+      w:Math.round(w),e:Math.round(e),plci:Math.round(plci),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),
+      wR:Math.round(w*rf),eR:Math.round(e*rf),plciR:Math.round(plci*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),
       lOwn:Math.round(lOwn),lPar:Math.round(lPar),lPen:Math.round(lPen),
       lOwnR:Math.round(lOwn*rf),lParR:Math.round(lPar*rf),lPenR:Math.round(lPen*rf),
       lm:Math.round(lT),lmR:Math.round(lT*rf),
     });
     w*=(1+p.wRate/100); if(y===2027)w+=p.v2027;
     e*=(1+p.eRate/100);
+    plci=(plci+p.plciYearly)*(1+p.plciRate/100); // Accumulation annuelle PLCI
     io*=(1+p.iRate/100);
     if(y===p.herYear)ip=pa.v*Math.pow(1+p.iRate/100,n); else if(y>p.herYear)ip*=(1+p.iRate/100);
   }
@@ -363,7 +365,6 @@ function vk(d,k){return mode==='real'?d[k+'R']:d[k];}
 function find(y){return rows.find(r=>r.year===y);}
 const isDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
 
-// ── KPIs et tableau ────────────────────────────────────────────────────────
 function updateKPIs(){
   [[2030,'kpi-2030'],[2034,'kpi-2034'],[2045,'kpi-2045']].forEach(([y,id])=>{
     const d=find(y);
@@ -383,21 +384,16 @@ function updateTable(){
     const isHerYear = (y === p.herYear);
 
     let mk = '';
-    if (isPensionYear) {
-      mk += ' &#127937;';
-    }
-    if (isLoanEnd) {
-      mk += ' &#128477;';
-    }
-    if (isHerYear) {
-      mk += ' &#128091;';
-    }
+    if (isPensionYear) mk += ' &#127937;';
+    if (isLoanEnd) mk += ' &#128477;';
+    if (isHerYear) mk += ' &#128091;';
 
     const tr=document.createElement('tr'); if(isPensionYear) tr.className='hl';
     tr.innerHTML=`<td style="font-weight:${isPensionYear||isLoanEnd||isHerYear?600:400}">${y}${mk}</td>`
       +`<td style="color:var(--tx3)">${d.age}</td>`
       +`<td style="color:#eda100">${fmt(vk(d,'w'),false)}</td>`
       +`<td style="color:#1baf7a">${fmt(vk(d,'e'),false)}</td>`
+      +`<td style="color:#e53987">${fmt(vk(d,'plci'),false)}</td>`
       +`<td style="color:#2a78d6">${fmt(vk(d,'io'),false)}</td>`
       +`<td style="color:#4a3aa7">${fmt(vk(d,'ip'),false)}</td>`
       +`<td style="font-weight:600">${fmt(vk(d,'tot'),false)}</td>`
@@ -406,7 +402,6 @@ function updateTable(){
   });
 }
 
-// ── Graphiques (avec gestion de repli) ──────────────────────────────────────
 function renderChart(){
   if(typeof Chart==='undefined'){
     document.getElementById('chart-legend').textContent='Chargement du graphique en cours…';
@@ -486,6 +481,7 @@ function renderChart(){
   } else if(tab==='breakdown'){
     leg.innerHTML='<div class="li"><div class="lsq" style="background:#4a3aa7"></div>Héritage &amp; immo parentaux</div>'
       +'<div class="li"><div class="lsq" style="background:#2a78d6"></div>Immobilier propre (net)</div>'
+      +'<div class="li"><div class="lsq" style="background:#e53987"></div>PLCI</div>'
       +'<div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP</div>'
       +'<div class="li"><div class="lsq" style="background:#eda100"></div>Wealins</div>';
     cfg={
@@ -493,6 +489,7 @@ function renderChart(){
       data:{labels:yrs,datasets:[
         {label:'Héritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'PLCI Branche 21',data:rows.map(r=>vk(r,'plci')),borderColor:C.plci,backgroundColor:C.plci+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
       ]},
@@ -542,7 +539,6 @@ function renderChart(){
   }
 }
 
-// ── Import PDF Wealins ─────────────────────────────────────────────────────
 function loadPdfJs(){
   return new Promise((res,rej)=>{
     if(window.pdfjsLib){res(window.pdfjsLib);return;}
@@ -611,7 +607,6 @@ async function importWealins(file){
   document.getElementById('pdfup').value='';
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────
 function refresh(){calc();updateKPIs();updateTable();renderChart();}
 function setMode(m){
   mode=m;
@@ -628,14 +623,18 @@ function updSlider(k,v){
   document.getElementById('lbl-'+k).textContent=parseFloat(v).toFixed(1).replace('.0','')+'%';
   refresh();
 }
-function updField(k,v){p[k]=parseFloat(v)||0;refresh();}
+function updField(k,v){
+  const key = k.startsWith('f-') ? k.replace('f-', '') : k;
+  p[key]=parseFloat(v)||0;
+  refresh();
+}
 
 function initControls(){
-  ['wRate','eRate','parWRate','infl','iRate'].forEach(k=>{
+  ['wRate','eRate','pRate','parWRate','infl','iRate'].forEach(k=>{
     document.getElementById('sl-'+k).value=p[k];
     document.getElementById('lbl-'+k).textContent=p[k]+'%';
   });
-  ['wBase','v2027','eBase','herYear','parWBase','parCash','pension','pensionYear'].forEach(k=>{
+  ['wBase','v2027','eBase','plciBase','plciYearly','herYear','parWBase','parCash','pension','pensionYear'].forEach(k=>{
     const el=document.getElementById('f-'+k); if(el) el.value=p[k];
   });
   const now=new Date();
