@@ -352,12 +352,21 @@ function calc(){
       ip *= (1 + p.iRate/100);
     }
 
-    // Transfert de l'EIP net vers Wealins à 67 ans (pensionYear)
-    if(y === p.pensionYear){
-      const eipNet = e * (1 - p.eipTax/100);
-      w += eipNet;
-      e = 0;
-    }
+
+// 1. Transfert de l'EIP net vers Wealins à 67 ans
+if(y === p.pensionYear){
+  const eipNet = e * (1 - p.eipTax/100);
+  w += eipNet;
+  e = 0;
+}
+
+// 2. Transfert de la PLCI nette vers Wealins à 67 ans (NOUVEAU)
+if(y === p.pensionYear){
+  const plciTax = 15; // Retenue fiscale estimée
+  const plciNet = plci * (1 - plciTax/100);
+  w += plciNet;
+  plci = 0;
+}
 
     const imN = io - passif;
     const tot = w + e + plci + imN + ip;
