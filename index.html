@@ -128,7 +128,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   
   <div class="sh">EPARGNE RETRAITE (PLCI)</div>
   <div class="fi"><label>Réserve estimée 2026 (&euro;)</label><input type="number" id="f-plciBase" oninput="updField('plciBase',this.value)"></div>
-  <div class="fi"><label>Cotisation annuelle (&euro;/an jusqu'en 2034)</label><input type="number" id="f-plciYearly" oninput="updField('plciYearly',this.value)"></div>
+  <div class="fi"><label>Cotisation annuelle épargne (&euro;/an jusqu'en 2034)</label><input type="number" id="f-plciYearly" oninput="updField('plciYearly',this.value)"></div>
 
   <div class="sh">H&Eacute;RITAGE PARENTAL</div>
   <div class="fi"><label>Ann&eacute;e h&eacute;ritage</label><input type="number" id="f-herYear" oninput="updField('herYear',this.value)"></div>
@@ -162,7 +162,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
         <th>Ann&eacute;e</th><th>&Acirc;ge</th>
         <th style="color:#eda100">Wealins</th><th style="color:#1baf7a">EIP</th>
         <th style="color:#e53987">PLCI</th>
-        <th style="color:#2a78d6">Immo net</th><th style="color:#4a3aa7">H&eacute;ritage+</th>
+        <th style="color:#2a78d6">Immo net</th><th style="color:#4a3aa7">Immo par.</th>
         <th>Total</th><th>Revenus/mois</th>
       </tr></thead>
       <tbody id="tbl-body"></tbody>
@@ -232,15 +232,17 @@ let propPar=[
   {name:'Studio 2',          loyer:475, valeur:100000},
   {name:'Maison parents (50%)', loyer:0, valeur:241000},
 ];
+
 let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
-  plciBase:18200, plciRate:2, plciYearly:3893,
+  plciBase:18200, pRate:2.5, plciYearly:3893, // Fixé à 2.5% par défaut
   infl:2, iRate:3,
   herYear:2034, 
   parWBase:110000, parWRate:5, parCash:40000,
   pension:1650, pensionYear:2045
 };
+
 let mode='real', tab='total', chartInst=null, rows=[];
 
 function fmt(v,c){
@@ -333,24 +335,20 @@ function calc(){
   const parWProjete = p.parWBase * Math.pow(1 + p.parWRate/100, nHer);
   const parFinancierBrut = (parWProjete + p.parCash) / 2;
   const taxeEstim = Math.min(parFinancierBrut * 0.03, 1500) + Math.max(0, parFinancierBrut - 50000) * 0.09;
-  const herOtherNetInitial = Math.max(0, parFinancierBrut - taxeEstim);
-
-  let accumulatedHerFin = 0;
+  const herNetFinancier = Math.max(0, parFinancierBrut - taxeEstim);
 
   for(let y=Y0;y<=Y1;y++){
     const n=y-Y0, age=y-BIRTH;
     const inf=Math.pow(1+p.infl/100,n), rf=1/inf;
     const passif=propOwn.reduce((s,prop)=>s+pPassif(prop,y),0);
     
-    // Capitalisation Wealins post-héritage
-    accumulatedHerFin *= (1 + p.wRate/100);
+    // Transfert direct du capital d'héritage financier dans Wealins à l'année de succession
     if(y === p.herYear){
-      accumulatedHerFin += herOtherNetInitial;
+      w += herNetFinancier;
     }
 
-    const herO = accumulatedHerFin;
     const imN = io - passif;
-    const tot = w + e + plci + imN + ip + herO;
+    const tot = w + e + plci + imN + ip;
     
     const lOwn = propOwn.reduce((s,prop)=>s+Math.max(0,prop.loyer*inf-pMens(prop,y)),0);
     const lPar = y >= p.herYear ? pa.l * inf : 0;
@@ -358,8 +356,8 @@ function calc(){
     
     const lT = lOwn + lPar + lPen;
     rows.push({year:y,age,
-      w:Math.round(w),e:Math.round(e),plci:Math.round(plci),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),
-      wR:Math.round(w*rf),eR:Math.round(e*rf),plciR:Math.round(plci*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),
+      w:Math.round(w),e:Math.round(e),plci:Math.round(plci),io:Math.round(imN),ip:Math.round(ip),tot:Math.round(tot),
+      wR:Math.round(w*rf),eR:Math.round(e*rf),plciR:Math.round(plci*rf),ioR:Math.round(imN*rf),ipR:Math.round(ip*rf),totR:Math.round(tot*rf),
       lOwn:Math.round(lOwn),lPar:Math.round(lPar),lPen:Math.round(lPen),
       lOwnR:Math.round(lOwn*rf),lParR:Math.round(lPar*rf),lPenR:Math.round(lPen*rf),
       lm:Math.round(lT),lmR:Math.round(lT*rf),
@@ -368,9 +366,9 @@ function calc(){
     w *= (1 + p.wRate/100); if(y===2027) w += p.v2027;
     e *= (1 + p.eRate/100);
 
-    // Arrêt des versements PLCI à partir de 2035 (seule la capitalisation continue)
+    // Arrêt des versements PLCI à partir de 2035 (capitalisation à 2.5%)
     const plciContrib = (y < 2035) ? p.plciYearly : 0;
-    plci = (plci + plciContrib) * (1 + p.plciRate/100);
+    plci = (plci + plciContrib) * (1 + p.pRate/100);
 
     io *= (1 + p.iRate/100);
     if(y === p.herYear) ip = pa.v * Math.pow(1 + p.iRate/100, n); else if(y > p.herYear) ip *= (1 + p.iRate/100);
@@ -495,19 +493,19 @@ function renderChart(){
     };
 
   } else if(tab==='breakdown'){
-    leg.innerHTML='<div class="li"><div class="lsq" style="background:#4a3aa7"></div>Héritage &amp; immo parentaux</div>'
+    leg.innerHTML='<div class="li"><div class="lsq" style="background:#4a3aa7"></div>Immo parentale reçue</div>'
       +'<div class="li"><div class="lsq" style="background:#2a78d6"></div>Immobilier propre (net)</div>'
-      +'<div class="li"><div class="lsq" style="background:#e53987"></div>PLCI</div>'
-      +'<div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP</div>'
-      +'<div class="li"><div class="lsq" style="background:#eda100"></div>Wealins</div>';
+      +'<div class="li"><div class="lsq" style="background:#e53987"></div>PLCI Branche 21</div>'
+      +'<div class="li"><div class="lsq" style="background:#1baf7a"></div>EIP Branche 23</div>'
+      +'<div class="li"><div class="lsq" style="background:#eda100"></div>Wealins (+ Héritage cash)</div>';
     cfg={
       type:'line',
       data:{labels:yrs,datasets:[
-        {label:'Héritage & immo parentaux',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'Immo parentale reçue',data:rows.map(r=>vk(r,'ip')),borderColor:C.h,backgroundColor:C.h+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'Immobilier propre (net)',data:rows.map(r=>vk(r,'io')),borderColor:C.i,backgroundColor:C.i+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'PLCI Branche 21',data:rows.map(r=>vk(r,'plci')),borderColor:C.plci,backgroundColor:C.plci+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
         {label:'EIP Branche 23',data:rows.map(r=>vk(r,'e')),borderColor:C.e,backgroundColor:C.e+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
-        {label:'Wealins',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
+        {label:'Wealins (+ Héritage cash)',data:rows.map(r=>vk(r,'w')),borderColor:C.w,backgroundColor:C.w+'38',borderWidth:1.5,pointRadius:0,fill:true,stack:'s',tension:0.35},
       ]},
       options:baseOpts,
       plugins:[refPlugin]
