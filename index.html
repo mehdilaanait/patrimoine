@@ -117,7 +117,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   <div class="fi">
     <label>Wealins actuel (&euro;) &mdash; ou importer :</label>
     <div class="pdf-row">
-      <input type="number" id="f-wBase" oninput="updField('f-wBase',this.value)" style="flex:1">
+      <input type="number" id="f-wBase" oninput="updField('wBase',this.value)" style="flex:1">
       <button class="pdf-btn" onclick="document.getElementById('pdfup').click()">&#128196; PDF</button>
     </div>
     <input type="file" id="pdfup" accept=".pdf" style="display:none" onchange="importWealins(this.files[0])">
@@ -128,7 +128,7 @@ tr.hl td:first-child{color:var(--acc-tx);font-weight:600;}
   
   <div class="sh">EPARGNE RETRAITE (PLCI)</div>
   <div class="fi"><label>Réserve estimée 2026 (&euro;)</label><input type="number" id="f-plciBase" oninput="updField('plciBase',this.value)"></div>
-  <div class="fi"><label>Cotisation annuelle épargne (&euro;)</label><input type="number" id="f-plciYearly" oninput="updField('plciYearly',this.value)"></div>
+  <div class="fi"><label>Cotisation annuelle (&euro;/an jusqu'en 2034)</label><input type="number" id="f-plciYearly" oninput="updField('plciYearly',this.value)"></div>
 
   <div class="sh">H&Eacute;RITAGE PARENTAL</div>
   <div class="fi"><label>Ann&eacute;e h&eacute;ritage</label><input type="number" id="f-herYear" oninput="updField('herYear',this.value)"></div>
@@ -235,7 +235,7 @@ let propPar=[
 let p={
   wBase:93398, wRate:7, v2027:20000,
   eBase:89000, eRate:5,
-  plciBase:18200, plciRate:2, plciYearly:3893, // Capitalisation PLCI Branche 21 AG Insurance
+  plciBase:18200, plciRate:2, plciYearly:3893,
   infl:2, iRate:3,
   herYear:2034, 
   parWBase:110000, parWRate:5, parCash:40000,
@@ -328,25 +328,35 @@ function calc(){
   const o=sO(), pa=sP();
   let w=p.wBase, e=p.eBase, plci=p.plciBase, io=o.v, ip=0;
   
+  // Part financière brute reçue au décès des parents
   const nHer = Math.max(0, p.herYear - Y0);
   const parWProjete = p.parWBase * Math.pow(1 + p.parWRate/100, nHer);
   const parFinancierBrut = (parWProjete + p.parCash) / 2;
   const taxeEstim = Math.min(parFinancierBrut * 0.03, 1500) + Math.max(0, parFinancierBrut - 50000) * 0.09;
-  const herOtherNet = Math.max(0, parFinancierBrut - taxeEstim);
+  const herOtherNetInitial = Math.max(0, parFinancierBrut - taxeEstim);
+
+  let accumulatedHerFin = 0;
 
   for(let y=Y0;y<=Y1;y++){
     const n=y-Y0, age=y-BIRTH;
     const inf=Math.pow(1+p.infl/100,n), rf=1/inf;
     const passif=propOwn.reduce((s,prop)=>s+pPassif(prop,y),0);
-    const herO=y>=p.herYear?herOtherNet:0;
-    const imN=io-passif;
-    const tot=w+e+plci+imN+ip+herO;
     
-    const lOwn=propOwn.reduce((s,prop)=>s+Math.max(0,prop.loyer*inf-pMens(prop,y)),0);
-    const lPar=y>=p.herYear ? pa.l * inf : 0;
-    const lPen=y>=p.pensionYear ? p.pension * inf : 0;
+    // Capitalisation Wealins post-héritage
+    accumulatedHerFin *= (1 + p.wRate/100);
+    if(y === p.herYear){
+      accumulatedHerFin += herOtherNetInitial;
+    }
+
+    const herO = accumulatedHerFin;
+    const imN = io - passif;
+    const tot = w + e + plci + imN + ip + herO;
     
-    const lT=lOwn+lPar+lPen;
+    const lOwn = propOwn.reduce((s,prop)=>s+Math.max(0,prop.loyer*inf-pMens(prop,y)),0);
+    const lPar = y >= p.herYear ? pa.l * inf : 0;
+    const lPen = y >= p.pensionYear ? p.pension * inf : 0;
+    
+    const lT = lOwn + lPar + lPen;
     rows.push({year:y,age,
       w:Math.round(w),e:Math.round(e),plci:Math.round(plci),io:Math.round(imN),ip:Math.round(ip+herO),tot:Math.round(tot),
       wR:Math.round(w*rf),eR:Math.round(e*rf),plciR:Math.round(plci*rf),ioR:Math.round(imN*rf),ipR:Math.round((ip+herO)*rf),totR:Math.round(tot*rf),
@@ -354,13 +364,19 @@ function calc(){
       lOwnR:Math.round(lOwn*rf),lParR:Math.round(lPar*rf),lPenR:Math.round(lPen*rf),
       lm:Math.round(lT),lmR:Math.round(lT*rf),
     });
-    w*=(1+p.wRate/100); if(y===2027)w+=p.v2027;
-    e*=(1+p.eRate/100);
-    plci=(plci+p.plciYearly)*(1+p.plciRate/100); // Accumulation annuelle PLCI
-    io*=(1+p.iRate/100);
-    if(y===p.herYear)ip=pa.v*Math.pow(1+p.iRate/100,n); else if(y>p.herYear)ip*=(1+p.iRate/100);
+
+    w *= (1 + p.wRate/100); if(y===2027) w += p.v2027;
+    e *= (1 + p.eRate/100);
+
+    // Arrêt des versements PLCI à partir de 2035 (seule la capitalisation continue)
+    const plciContrib = (y < 2035) ? p.plciYearly : 0;
+    plci = (plci + plciContrib) * (1 + p.plciRate/100);
+
+    io *= (1 + p.iRate/100);
+    if(y === p.herYear) ip = pa.v * Math.pow(1 + p.iRate/100, n); else if(y > p.herYear) ip *= (1 + p.iRate/100);
   }
 }
+
 function vk(d,k){return mode==='real'?d[k+'R']:d[k];}
 function find(y){return rows.find(r=>r.year===y);}
 const isDark=()=>window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
